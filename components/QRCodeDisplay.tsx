@@ -27,6 +27,16 @@ export default function QRCodeDisplay({
   const [showQRs, setShowQRs] = useState<boolean[]>([])
   const [fullscreenQR, setFullscreenQR] = useState<number | null>(null)
 
+  // Debug: log dei QR codes ricevuti
+  useEffect(() => {
+    console.log('🔍 QRCodeDisplay - QR Codes ricevuti:', qrCodes)
+    if (qrCodes && Array.isArray(qrCodes)) {
+      qrCodes.forEach((qr, index) => {
+        console.log(`  QR ${index + 1}: ${qr}`)
+      })
+    }
+  }, [qrCodes])
+
   // Anima l'apparizione dei QR codes uno alla volta
   useEffect(() => {
     if (qrCodes && Array.isArray(qrCodes)) {
@@ -125,14 +135,14 @@ export default function QRCodeDisplay({
           <div className="mb-8">
             <div className="text-8xl mb-6">🎉</div>
             <h1 className={`${typography.title.classes} text-[#8ac926] mb-4`}>Acquisto Completato!</h1>
-            <p className={`${typography.subtitle.classes} text-white mb-2`}>{itineraryTitle}</p>
-            <p className={`${typography.secondary.classes} text-gray-300`}>
+            <p className={`${typography.title.classes} text-white mb-2`}>{itineraryTitle}</p>
+            <p className={`${typography.subtitle.classes} text-gray-300`}>
               {tickets} biglietto{tickets > 1 ? "i" : ""} - €{total}
             </p>
           </div>
 
           <div className="mb-12">
-            <h2 className={`${typography.subtitle.classes} text-white mb-8`}>I Tuoi Biglietti QR</h2>
+            <h2 className={`${typography.title.classes} text-white mb-8`}>I Tuoi Biglietti QR</h2>
 
             <div className="flex flex-col items-center gap-6">
               {layout.rows.map((ticketsInRow, rowIndex) => {
@@ -172,14 +182,19 @@ export default function QRCodeDisplay({
                           >
                             <div className="bg-white rounded-2xl p-4 shadow-md">
                               <QRCode
+                                key={`qr-${index}-${qrCode}`} // Forza re-render con key unica
                                 value={qrCode}
                                 size={layout.ticketWidth - 80}
                                 style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                               />
+                              {/* Debug: mostra l'URL sotto il QR code */}
+                              <div className="mt-2 text-xs text-gray-600 break-all">
+                                {qrCode}
+                              </div>
                             </div>
                             <div>
                               <p
-                                className="text-white font-bold text-xl"
+                                className={`text-white font-bold ${typography.subtitle.classes}`}
                                 style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
                               >
                                 Biglietto #{index + 1}
@@ -224,14 +239,19 @@ export default function QRCodeDisplay({
             >
               <div className="bg-white rounded-3xl p-6 shadow-xl mb-6">
                 <QRCode
+                  key={`qr-fullscreen-${fullscreenQR}-${qrCodes[fullscreenQR]}`} // Forza re-render con key unica
                   value={qrCodes[fullscreenQR]}
                   size={300}
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                 />
+                {/* Debug: mostra l'URL sotto il QR code */}
+                <div className="mt-4 text-sm text-gray-600 break-all">
+                  {qrCodes[fullscreenQR]}
+                </div>
               </div>
 
               <div className="text-center mb-6">
-                <p className="text-white font-bold text-3xl mb-4" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}>
+                <p className={`text-white font-bold ${typography.title.classes} mb-4`} style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}>
                   Biglietto #{fullscreenQR + 1}
                 </p>
               </div>

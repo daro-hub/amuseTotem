@@ -35,23 +35,21 @@ export default function QuantitySelector () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col p-6">
+    <div className="min-h-screen bg-black flex flex-col items-center p-6">
       {/* Header con logo e titolo - Allineato in alto */}
-      <div className="flex items-center justify-center pt-8 pb-12">
-        <div className="flex items-center gap-6">
-          <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
-          <div className="text-center">
-            <h1 className={`${typography.title.classes} ${gradients.primary}`}>
-              {t('selectQuantity', currentLanguage)}
-            </h1>
-          </div>
+      <div className="flex flex-col items-center pt-2 pb-4">
+        <AmuseLogo size={tabletSizes.logo.size} />
+        <div className="text-center mt-2">
+          <h1 className={`${typography.title.classes} ${gradients.primary}`}>
+            {t('selectQuantity', currentLanguage)}
+          </h1>
         </div>
       </div>
 
-      {/* Contenuto centrale */}
-      <div className={`flex flex-col items-center space-y-12 w-full ${tabletSizes.spacing.container} flex-1 justify-center`}>
+      {/* Contenuto centrale - Centrato orizzontalmente */}
+      <div className={`flex flex-col items-center space-y-12 w-full max-w-4xl mx-auto flex-1 justify-center`}>
         {/* Testo descrittivo */}
-        <p className={`text-white ${typography.body.classes} text-center`}>
+        <p className={`text-white text-5xl font-light text-center`}>
           {t('quantityDescription', currentLanguage)}
         </p>
 
@@ -81,8 +79,8 @@ export default function QuantitySelector () {
         </div>
       </div>
 
-      {/* Pulsanti */}
-      <div className={`w-full ${tabletSizes.spacing.container} space-y-4`}>
+      {/* Pulsanti - Centrati orizzontalmente */}
+      <div className={`w-full max-w-4xl mx-auto space-y-4`}>
         <Button
           onClick={handleProceed}
                       className={`w-full bg-teal-800 hover:bg-teal-700 text-white rounded-lg ${tabletSizes.button.padding} font-light ${tabletSizes.button.text}`}

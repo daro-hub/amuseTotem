@@ -135,13 +135,13 @@ export default function Homepage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] flex flex-col p-8">
+    <div className="min-h-screen bg-[#121212] flex flex-col items-center p-8">
       <NavigationBar />
 
-      <div className="max-w-6xl mx-auto flex-1">
+      <div className="max-w-6xl mx-auto w-full">
         {/* Header con titolo - Allineato in alto */}
-        <div className="text-center pt-8 pb-12">
-          <h1 className={`${typography.title.classes} ${gradients.primary} mb-8`}>
+        <div className="text-center pt-2 pb-4">
+          <h1 className={`${typography.title.classes} ${gradients.primary} mb-4`}>
             Scegli il Tuo Itinerario
           </h1>
 

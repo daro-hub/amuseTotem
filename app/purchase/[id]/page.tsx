@@ -166,8 +166,12 @@ export default function Purchase() {
 
       // Genera i ticket codes reali tramite API
       console.log('🔄 Generando ticket codes...')
-      const qrCodes = await generateMultipleTickets(tickets, museumCode)
-      console.log('✅ QR Codes (URL di check-in) ricevuti:')
+      const generatedTickets = await generateMultipleTickets(tickets, museumCode)
+      console.log('✅ Tickets generati:', generatedTickets)
+      
+      // Estrai solo gli URL dei QR codes
+      const qrCodes = generatedTickets.map(ticket => ticket.qrCode || '')
+      console.log('✅ QR Codes (URL di check-in) estratti:')
       qrCodes.forEach((url, index) => {
         console.log(`  Ticket ${index + 1}: ${url}`)
       })

@@ -54,9 +54,20 @@ export default function ThankYou () {
           console.log('📦 Payload: { museum_code: "' + museumData.code + '" }')
           console.log('📊 Quantità biglietti: ' + savedQuantity)
           
-          const generatedQRCodes = await generateMultipleTickets(parseInt(savedQuantity), museumData.code)
-          setQrCodes(generatedQRCodes)
-          console.log('✅ QR Codes generati con successo:', generatedQRCodes)
+          const generatedTickets = await generateMultipleTickets(parseInt(savedQuantity), museumData.code)
+          console.log('✅ Tickets generati con successo:', generatedTickets)
+          
+          // Estrai solo gli URL dei QR codes
+          const qrCodeUrls = generatedTickets.map(ticket => ticket.qrCode || '')
+          setQrCodes(qrCodeUrls)
+          
+          console.log('🔍 DEBUG - Array QR Codes URL estratti:')
+          console.log('  Lunghezza array:', qrCodeUrls.length)
+          qrCodeUrls.forEach((qr, index) => {
+            console.log(`  QR[${index}]: "${qr}"`)
+            console.log(`  QR[${index}] length: ${qr.length}`)
+            console.log(`  QR[${index}] type: ${typeof qr}`)
+          })
         }
       } catch (error) {
         console.error('❌ Errore nella generazione dei QR codes:', error)
@@ -177,11 +188,11 @@ export default function ThankYou () {
 
       {/* Contenuto centrale */}
       <div className="flex flex-col items-center space-y-4 w-full max-w-4xl">
-        <h2 className="text-white text-2xl font-bold text-center">
+        <h2 className="text-white text-6xl font-bold text-center">
           {t('thankYou.title', currentLanguage)}
         </h2>
         
-        <p className="text-white text-lg font-light text-center">
+        <p className="text-white text-3xl font-light text-center">
           {t('thankYou.subtitle', currentLanguage)}
         </p>
 
@@ -235,7 +246,7 @@ export default function ThankYou () {
                   >
                     <div className="flex flex-col items-center space-y-3">
                       {generateQRCode(qrCode)}
-                      <span className="text-white text-sm font-medium bg-teal-800 px-3 py-1 rounded-full">
+                      <span className="text-white text-4xl font-medium bg-teal-800 px-3 py-1 rounded-full">
                         {index + 1}
                       </span>
                     </div>

@@ -114,7 +114,7 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col p-6 relative">
+    <div className="min-h-screen bg-black flex flex-col items-center p-6 relative">
       {/* Tasto invisibile in alto a destra per modificare museum_id */}
       <button
         onClick={handleInvisibleButtonClick}
@@ -123,19 +123,17 @@ export default function LanguageSelector() {
       />
       
       {/* Header con logo e titolo - Allineato in alto */}
-      <div className="flex items-center justify-center pt-8 pb-12">
-        <div className="flex items-center gap-6">
-          <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
-          <div className="text-center">
-            <h1 className={`${typography.title.classes} ${gradients.primary}`}>
-              {t('language.select', currentLanguage || 'it')}
-            </h1>
-          </div>
+      <div className="flex flex-col items-center pt-2 pb-4">
+        <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
+        <div className="text-center mt-2">
+          <h1 className={`${typography.title.classes} ${gradients.primary}`}>
+            {t('language.select', currentLanguage || 'it')}
+          </h1>
         </div>
       </div>
 
-      {/* Griglia lingue - Ottimizzata per tablet verticale */}
-      <div className={`grid grid-cols-2 ${tabletSizes.spacing.gap} w-full ${tabletSizes.spacing.container}`}>
+      {/* Griglia lingue - Centrata orizzontalmente */}
+      <div className={`grid grid-cols-2 ${tabletSizes.spacing.gap} w-full max-w-6xl mx-auto`}>
         {displayLanguages.length > 0 ? (
           displayLanguages.map((language, index) => {
             const langCode = language.code || 'it' // Fallback per langCode undefined
@@ -210,7 +208,7 @@ export default function LanguageSelector() {
                 
                 {/* Nome della lingua sovrapposto */}
                 <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
-                  <span className="text-white text-base font-light drop-shadow-lg">
+                  <span className={`text-white ${typography.secondary.classes} font-light drop-shadow-lg`}>
                     {language.name || language.nativeName || langCode}
                   </span>
                 </div>

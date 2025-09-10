@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
+import { typography } from '@/lib/typography'
 
 interface MuseumDialogProps {
   isOpen: boolean
@@ -112,14 +113,14 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader className="text-center mb-6">
-            <DialogTitle className="text-lg font-semibold">
+            <DialogTitle className={`${typography.subtitle.classes} font-semibold`}>
               {currentMuseumId ? 'Modifica ID Museo' : 'Configurazione Museo'}
             </DialogTitle>
           </DialogHeader>
           
           <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center">
             <div className="w-full text-center">
-              <label htmlFor="museumId" className="block text-sm font-medium mb-2">
+              <label htmlFor="museumId" className={`block ${typography.body.classes} font-medium mb-2`}>
                 ID Museo
               </label>
               <div className="flex justify-center">
@@ -130,11 +131,12 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
                   onChange={(e) => setMuseumId(e.target.value)}
                   placeholder="467"
                   disabled={isLoading}
-                  className="text-3xl w-24 text-center font-medium"
+                  className={`text-9xl w-48 h-20 text-center font-bold`}
+                  style={{ fontSize: '6rem', lineHeight: '1' }}
                 />
               </div>
               {error && (
-                <p className="text-red-500 text-sm mt-1">{error}</p>
+                <p className={`text-red-500 ${typography.small.classes} mt-1`}>{error}</p>
               )}
             </div>
             
@@ -144,18 +146,18 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
                 variant="outline"
                 onClick={onClose}
                 disabled={isLoading}
-                className="flex-1"
+                className={`flex-1 ${typography.body.classes}`}
               >
                 Annulla
               </Button>
               <Button
                 type="submit"
                 disabled={isLoading || !museumId.trim()}
-                className="flex-1"
+                className={`flex-1 ${typography.body.classes}`}
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="w-6 h-6 mr-2 animate-spin" />
                     Caricamento...
                   </>
                 ) : (

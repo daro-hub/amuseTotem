@@ -7,6 +7,7 @@ import AmuseLogo from '@/components/AmuseLogo'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
+import { typography } from '@/lib/typography'
 
 export default function PaymentProcess () {
   const router = useRouter()
@@ -41,10 +42,10 @@ export default function PaymentProcess () {
       <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container}`}>
         {/* Istruzioni pagamento */}
         <div className="text-center space-y-4">
-          <h2 className={`text-white ${tabletSizes.text.subtitle} font-light`}>
+          <h2 className={`text-white text-8xl font-bold`}>
             {t('paymentProcess.title', currentLanguage)}
           </h2>
-          <p className={`text-white ${tabletSizes.text.small} font-light`}>
+          <p className={`text-white ${typography.body.classes} font-light`}>
             {t('paymentProcess.instructions', currentLanguage)}
           </p>
         </div>
