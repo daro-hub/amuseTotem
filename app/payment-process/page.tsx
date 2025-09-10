@@ -32,26 +32,26 @@ export default function PaymentProcess () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-between p-6">
+    <div className="min-h-screen bg-black flex flex-col items-center p-6">
       {/* Logo e nome app */}
-      <div className="mt-16">
-        <AmuseLogo size="md" />
+      <div className="pt-0 pb-0">
+        <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
       </div>
 
       {/* Contenuto centrale */}
-      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container}`}>
+      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container} mt-8`}>
         {/* Istruzioni pagamento */}
         <div className="text-center space-y-4">
-          <h2 className={`text-white text-8xl font-bold`}>
+          <h2 className="text-white text-6xl font-bold text-center">
             {t('paymentProcess.title', currentLanguage)}
           </h2>
-          <p className={`text-white ${typography.body.classes} font-light`}>
+          <p className="text-white text-3xl font-light text-center">
             {t('paymentProcess.instructions', currentLanguage)}
           </p>
         </div>
 
         {/* Immagine pay.png */}
-        <div className="w-48 h-32 flex items-center justify-center">
+        <div className="w-80 h-48 flex items-center justify-center">
           <img 
             src="/pay.png" 
             alt="Payment" 
@@ -70,11 +70,11 @@ export default function PaymentProcess () {
       </div>
 
       {/* Pulsante indietro */}
-      <div className={`w-full ${tabletSizes.spacing.container}`}>
+      <div className={`w-full max-w-md mx-auto mt-8`}>
         <Button
           onClick={handleBack}
           variant="outline"
-          className={`w-full bg-transparent border border-white text-white hover:bg-white/5 rounded-lg ${tabletSizes.button.padding} font-light ${tabletSizes.button.text}`}
+          className={`w-full h-16 bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-lg text-3xl font-light`}
         >
           {t('back', currentLanguage)}
         </Button>

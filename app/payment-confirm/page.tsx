@@ -30,19 +30,19 @@ export default function PaymentConfirm () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-between p-6">
+    <div className="min-h-screen bg-black flex flex-col items-center p-6">
       {/* Logo e nome app */}
-      <div className="mt-16">
-        <AmuseLogo size={tabletSizes.logo.size} />
+      <div className="pt-0 pb-0">
+        <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
       </div>
 
       {/* Contenuto centrale */}
-      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container}`}>
-        <h2 className={`text-white text-8xl font-bold text-center`}>
+      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container} mt-0`}>
+        <h2 className="text-white text-6xl font-bold text-center">
           {t('paymentConfirm.title', currentLanguage)}
         </h2>
         
-        <p className={`text-white text-4xl font-light text-center`}>
+        <p className="text-white text-3xl font-light text-center">
           {t('paymentConfirm.description', currentLanguage)}
         </p>
 
@@ -65,16 +65,16 @@ export default function PaymentConfirm () {
       </div>
 
       {/* Pulsanti */}
-      <div className={`w-full ${tabletSizes.spacing.container} space-y-4`}>
+      <div className={`w-full max-w-md mx-auto space-y-4`}>
         <Button
           onClick={handlePay}
-          className={`w-full bg-teal-800 hover:bg-teal-700 text-white rounded-lg ${tabletSizes.button.padding} font-light ${tabletSizes.button.text}`}
+          className={`w-full h-16 bg-teal-800 hover:bg-teal-700 text-white rounded-lg text-3xl font-light`}
         >
           {t('paymentConfirm.pay', currentLanguage)}
         </Button>
         <Button
           onClick={handleBack}
-          className={`w-full ${buttonStyles.outline} ${tabletSizes.button.padding} ${tabletSizes.button.text}`}
+          className={`w-full h-16 border-2 border-white text-white hover:bg-white/10 rounded-lg text-3xl font-light`}
         >
           {t('back', currentLanguage)}
         </Button>

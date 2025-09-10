@@ -19,8 +19,11 @@ interface MuseumLanguage {
 }
 
 interface MuseumData {
-  name: string
+  museum_id: string
+  museum_name: string
+  museum_description: string
   museum_languages: MuseumLanguage[]
+  itineraries: any[]
 }
 
 export default function LanguageSelector() {
@@ -92,13 +95,11 @@ export default function LanguageSelector() {
   const displayLanguages = museumData?.museum_languages || []
   
   // Debug: log delle lingue del museo
-  console.log('🏛️ Museum data:', museumData)
-  console.log('🌍 Display languages:', displayLanguages)
-  console.log('🔍 Museum languages count:', displayLanguages.length)
+  console.log('🏛️ Museum data available:', !!museumData)
+  console.log('🌍 Display languages count:', displayLanguages.length)
   console.log('🆔 Museum ID:', museumId)
   console.log('⏳ Is loading:', isLoading)
   if (displayLanguages.length > 0) {
-    console.log('📋 First language:', displayLanguages[0])
     console.log('📋 All language codes:', displayLanguages.map(l => l.code))
   } else {
     console.log('❌ No languages found - this might be the problem!')
@@ -114,7 +115,7 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center p-6 relative">
+    <div className="min-h-screen bg-black flex flex-col items-center p-6 pt-0 relative">
       {/* Tasto invisibile in alto a destra per modificare museum_id */}
       <button
         onClick={handleInvisibleButtonClick}
@@ -123,12 +124,12 @@ export default function LanguageSelector() {
       />
       
       {/* Header con logo e titolo - Allineato in alto */}
-      <div className="flex flex-col items-center pt-2 pb-4">
-        <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
+      <div className="flex flex-col items-center py-0 my-0">
+        <AmuseLogo size={tabletSizes.logo.size} />
         <div className="text-center mt-2">
-          <h1 className={`${typography.title.classes} ${gradients.primary}`}>
-            {t('language.select', currentLanguage || 'it')}
-          </h1>
+          <h2 className="text-white text-6xl font-bold text-center">
+            {t('language.select')}
+          </h2>
         </div>
       </div>
 
@@ -136,9 +137,9 @@ export default function LanguageSelector() {
       <div className={`grid grid-cols-2 ${tabletSizes.spacing.gap} w-full max-w-6xl mx-auto`}>
         {displayLanguages.length > 0 ? (
           displayLanguages.map((language, index) => {
-            const langCode = language.code || 'it' // Fallback per langCode undefined
+            const langCode = language.code || 'it'
             // Mapping più intelligente per le bandiere
-            let countryCode = languageToCountryCode[langCode]
+            let countryCode = languageToCountryCode[langCode as keyof typeof languageToCountryCode]
             
             if (!countryCode) {
               // Prova varianti del codice lingua
@@ -149,8 +150,8 @@ export default function LanguageSelector() {
               ]
               
               for (const variant of langVariants) {
-                if (languageToCountryCode[variant]) {
-                  countryCode = languageToCountryCode[variant]
+                if (languageToCountryCode[variant as keyof typeof languageToCountryCode]) {
+                  countryCode = languageToCountryCode[variant as keyof typeof languageToCountryCode]
                   break
                 }
               }
@@ -158,11 +159,11 @@ export default function LanguageSelector() {
             
             // Fallback finale: usa il codice lingua originale se è di 2 caratteri
             if (!countryCode && typeof langCode === 'string' && langCode.length === 2) {
-              countryCode = langCode.toUpperCase()
+              countryCode = langCode.toUpperCase() as any
             } else if (!countryCode) {
               // Prova a usare il codice lingua originale come paese
               if (typeof langCode === 'string' && langCode.length >= 2) {
-                countryCode = langCode.substring(0, 2).toUpperCase()
+                countryCode = langCode.substring(0, 2).toUpperCase() as any
               } else {
                 countryCode = 'IT' // Fallback solo se proprio non si trova nulla
               }
@@ -175,15 +176,13 @@ export default function LanguageSelector() {
             
             // Debug: log del mapping bandiere
             console.log(`🏳️ Language ${index}:`, {
-              original: language,
               langCode,
               countryCode,
-              directMapping: languageToCountryCode[langCode],
               finalFlag: `https://flagcdn.com/w1280/${countryCode?.toLowerCase() || 'it'}.png`
             })
             
             // Crea una chiave unica combinando tutti i possibili identificatori
-            const uniqueKey = `${language.language_id || language.id || index}-${langCode}-${index}`
+            const uniqueKey = `${langCode}-${index}`
             
             return (
               <button
@@ -199,7 +198,7 @@ export default function LanguageSelector() {
                 <img 
                   src={`https://flagcdn.com/w1280/${countryCode?.toLowerCase() || 'it'}.png`}
                   srcSet={`https://flagcdn.com/w2560/${countryCode?.toLowerCase() || 'it'}.png 2x, https://flagcdn.com/w3840/${countryCode?.toLowerCase() || 'it'}.png 3x`}
-                  alt={`${language.name || language.nativeName || langCode} flag`}
+                  alt={`${language.name || langCode} flag`}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 
@@ -209,7 +208,7 @@ export default function LanguageSelector() {
                 {/* Nome della lingua sovrapposto */}
                 <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
                   <span className={`text-white ${typography.secondary.classes} font-light drop-shadow-lg`}>
-                    {language.name || language.nativeName || langCode}
+                    {language.name || langCode}
                   </span>
                 </div>
               </button>

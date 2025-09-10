@@ -35,21 +35,21 @@ export default function QuantitySelector () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center p-6">
+    <div className="min-h-screen bg-black flex flex-col items-center p-6 pt-0">
       {/* Header con logo e titolo - Allineato in alto */}
-      <div className="flex flex-col items-center pt-2 pb-4">
+      <div className="flex flex-col items-center pt-0 pb-4">
         <AmuseLogo size={tabletSizes.logo.size} />
-        <div className="text-center mt-2">
-          <h1 className={`${typography.title.classes} ${gradients.primary}`}>
+        <div className="text-center mt-0">
+          <h2 className="text-white text-6xl font-bold text-center">
             {t('selectQuantity', currentLanguage)}
-          </h1>
+          </h2>
         </div>
       </div>
 
       {/* Contenuto centrale - Centrato orizzontalmente */}
-      <div className={`flex flex-col items-center space-y-12 w-full max-w-4xl mx-auto flex-1 justify-center`}>
+      <div className={`flex flex-col items-center space-y-10 w-full max-w-4xl mx-auto flex-1 justify-center `}>
         {/* Testo descrittivo */}
-        <p className={`text-white text-5xl font-light text-center`}>
+        <p className="text-white text-3xl font-light text-center">
           {t('quantityDescription', currentLanguage)}
         </p>
 
@@ -80,16 +80,16 @@ export default function QuantitySelector () {
       </div>
 
       {/* Pulsanti - Centrati orizzontalmente */}
-      <div className={`w-full max-w-4xl mx-auto space-y-4`}>
+      <div className={`w-full max-w-md mx-auto space-y-4 mt-8`}>
         <Button
           onClick={handleProceed}
-                      className={`w-full bg-teal-800 hover:bg-teal-700 text-white rounded-lg ${tabletSizes.button.padding} font-light ${tabletSizes.button.text}`}
+          className={`w-full h-16 bg-teal-800 hover:bg-teal-700 text-white rounded-lg text-3xl font-light`}
         >
           {t('proceed', currentLanguage)}
         </Button>
         <Button
           onClick={handleBack}
-          className={`w-full ${buttonStyles.outline} ${tabletSizes.button.padding} ${tabletSizes.button.text}`}
+          className={`w-full h-16 border-2 border-white text-white hover:bg-white/10 rounded-lg text-3xl font-light`}
         >
           {t('back', currentLanguage)}
         </Button>

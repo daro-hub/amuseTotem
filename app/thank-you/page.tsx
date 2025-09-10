@@ -182,8 +182,8 @@ export default function ThankYou () {
         }
       `}</style>
       {/* Logo e nome app */}
-      <div className="mt-4">
-        <AmuseLogo size="md" />
+      <div className="pt-0 pb-0">
+        <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
       </div>
 
       {/* Contenuto centrale */}

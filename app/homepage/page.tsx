@@ -141,9 +141,9 @@ export default function Homepage() {
       <div className="max-w-6xl mx-auto w-full">
         {/* Header con titolo - Allineato in alto */}
         <div className="text-center pt-2 pb-4">
-          <h1 className={`${typography.title.classes} ${gradients.primary} mb-4`}>
+          <h2 className="text-white text-6xl font-bold text-center mb-4">
             Scegli il Tuo Itinerario
-          </h1>
+          </h2>
 
           <div className={`${gradients.secondary} p-1 rounded-2xl mb-8 max-w-4xl mx-auto`}>
             <div className="bg-gray-800 rounded-2xl p-6">
@@ -152,8 +152,8 @@ export default function Homepage() {
                   <MessageCircle className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className={`${typography.subtitle.classes} text-white mb-2`}>Hai curiosità durante la visita?</h3>
-                  <p className={`${typography.body.classes} text-gray-300`}>
+                  <h3 className="text-white text-3xl font-light mb-2">Hai curiosità durante la visita?</h3>
+                  <p className="text-white text-3xl font-light text-gray-300">
                     Potrai chattare con me, Pinci, per scoprire tutti i segreti delle opere!
                   </p>
                 </div>
