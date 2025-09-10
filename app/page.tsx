@@ -9,6 +9,7 @@ import { t } from "@/lib/translations"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { useMuseum } from "@/contexts/MuseumContext"
 import { MuseumDialog } from "@/components/MuseumDialog"
+import { typography, gradients } from "@/lib/typography"
 
 
 interface MuseumLanguage {
@@ -113,7 +114,7 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6 relative">
+    <div className="min-h-screen bg-black flex flex-col p-6 relative">
       {/* Tasto invisibile in alto a destra per modificare museum_id */}
       <button
         onClick={handleInvisibleButtonClick}
@@ -121,13 +122,15 @@ export default function LanguageSelector() {
         title="Modifica ID Museo"
       />
       
-      {/* Logo e nome app - Ottimizzato per tablet */}
-      <div className="mb-6 flex flex-col items-center">
-        <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
-        <div className="text-center mt-4">
-          <h1 className="text-white text-2xl font-light">
-            {t('language.select', currentLanguage || 'it')}
-          </h1>
+      {/* Header con logo e titolo - Allineato in alto */}
+      <div className="flex items-center justify-center pt-8 pb-12">
+        <div className="flex items-center gap-6">
+          <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
+          <div className="text-center">
+            <h1 className={`${typography.title.classes} ${gradients.primary}`}>
+              {t('language.select', currentLanguage || 'it')}
+            </h1>
+          </div>
         </div>
       </div>
 
@@ -216,8 +219,8 @@ export default function LanguageSelector() {
           })
         ) : (
           <div className="col-span-2 text-center text-white">
-            <div className="text-2xl mb-4">Nessuna lingua disponibile</div>
-            <div className="text-lg mb-6">Configura un museo per vedere le lingue disponibili</div>
+            <div className={`${typography.subtitle.classes} mb-4`}>Nessuna lingua disponibile</div>
+            <div className={`${typography.body.classes} mb-6`}>Configura un museo per vedere le lingue disponibili</div>
             <button
               onClick={handleInvisibleButtonClick}
               className="px-6 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors"

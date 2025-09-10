@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Home, CheckCircle } from "lucide-react"
 import QRCodeDisplay from "@/components/QRCodeDisplay"
 import { buttonStyles } from "@/lib/colors"
+import { typography } from "@/lib/typography"
 
 export default function Success() {
   const [purchaseData, setPurchaseData] = useState<any>(null)
@@ -38,7 +39,7 @@ export default function Success() {
       <div className="min-h-screen bg-[#121212] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#8ac926] mx-auto mb-4"></div>
-          <p className="text-2xl text-white">Caricamento...</p>
+          <p className={`${typography.subtitle.classes} text-white`}>Caricamento...</p>
         </div>
       </div>
     )
@@ -49,7 +50,7 @@ export default function Success() {
     return (
       <div className="min-h-screen bg-[#121212] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-2xl text-white">Errore nel caricamento dei biglietti</p>
+          <p className={`${typography.subtitle.classes} text-white`}>Errore nel caricamento dei biglietti</p>
           <button
             onClick={handleNewPurchase}
             className="mt-4 bg-[#fb5607] text-white text-xl font-bold py-3 px-6 rounded-full hover:bg-[#e64a00] transition-all duration-300"

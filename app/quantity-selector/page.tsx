@@ -7,6 +7,7 @@ import AmuseLogo from '@/components/AmuseLogo'
 import { buttonStyles, tabletSizes } from '@/lib/colors'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
+import { typography, gradients } from '@/lib/typography'
 
 export default function QuantitySelector () {
   const [quantity, setQuantity] = useState(1)
@@ -34,24 +35,28 @@ export default function QuantitySelector () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-between p-6">
-      {/* Logo e nome app */}
-      <div className="mt-16">
-        <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
+    <div className="min-h-screen bg-black flex flex-col p-6">
+      {/* Header con logo e titolo - Allineato in alto */}
+      <div className="flex items-center justify-center pt-8 pb-12">
+        <div className="flex items-center gap-6">
+          <AmuseLogo size={tabletSizes.logo.size} theme="dark" />
+          <div className="text-center">
+            <h1 className={`${typography.title.classes} ${gradients.primary}`}>
+              {t('selectQuantity', currentLanguage)}
+            </h1>
+          </div>
+        </div>
       </div>
 
       {/* Contenuto centrale */}
-      <div className={`flex flex-col items-center space-y-12 w-full ${tabletSizes.spacing.container}`}>
+      <div className={`flex flex-col items-center space-y-12 w-full ${tabletSizes.spacing.container} flex-1 justify-center`}>
         {/* Testo descrittivo */}
-        <p className={`text-white ${tabletSizes.text.small} font-light text-center leading-relaxed`}>
+        <p className={`text-white ${typography.body.classes} text-center`}>
           {t('quantityDescription', currentLanguage)}
         </p>
 
         {/* Sezione selezione quantità */}
-        <div className="w-full mb-16">
-        <h2 className={`text-white ${tabletSizes.text.body} font-light mb-6 text-center`}>
-          {t('selectQuantity', currentLanguage)}
-        </h2>
+        <div className="w-full">
           
           {/* Selettore quantità */}
           <div className="flex items-center justify-center space-x-12">
@@ -62,7 +67,7 @@ export default function QuantitySelector () {
               <span className="text-white text-3xl font-light">-</span>
             </button>
             
-            <div className="text-white text-4xl font-light min-w-[6rem] text-center">
+            <div className={`text-white ${typography.title.classes} min-w-[6rem] text-center`}>
               {quantity}
             </div>
             

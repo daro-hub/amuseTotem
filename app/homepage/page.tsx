@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import NavigationBar from "@/components/NavigationBar"
 import ItineraryCard from "@/components/ItineraryCard"
 import { MessageCircle } from "lucide-react"
+import { typography, gradients } from "@/lib/typography"
 
 interface Itinerary {
   id: number
@@ -128,30 +129,31 @@ export default function Homepage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#121212] flex items-center justify-center">
-        <div className="text-white text-2xl">Caricamento itinerari...</div>
+        <div className={`text-white ${typography.subtitle.classes}`}>Caricamento itinerari...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] p-8">
+    <div className="min-h-screen bg-[#121212] flex flex-col p-8">
       <NavigationBar />
 
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12 fade-in">
-          <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-[#ffbe0b] via-[#fb5607] to-[#ff8500] bg-clip-text text-transparent">
+      <div className="max-w-6xl mx-auto flex-1">
+        {/* Header con titolo - Allineato in alto */}
+        <div className="text-center pt-8 pb-12">
+          <h1 className={`${typography.title.classes} ${gradients.primary} mb-8`}>
             Scegli il Tuo Itinerario
           </h1>
 
-          <div className="bg-gradient-to-r from-[#8338ec] via-[#3a86ff] to-[#ff006e] p-1 rounded-2xl mb-8 max-w-4xl mx-auto">
+          <div className={`${gradients.secondary} p-1 rounded-2xl mb-8 max-w-4xl mx-auto`}>
             <div className="bg-gray-800 rounded-2xl p-6">
               <div className="flex items-center gap-4">
-                <div className="bg-gradient-to-r from-[#ffbe0b] to-[#fb5607] p-3 rounded-full">
+                <div className={`${gradients.accent} p-3 rounded-full`}>
                   <MessageCircle className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-white mb-2">Hai curiosità durante la visita?</h3>
-                  <p className="text-xl text-gray-300">
+                  <h3 className={`${typography.subtitle.classes} text-white mb-2`}>Hai curiosità durante la visita?</h3>
+                  <p className={`${typography.body.classes} text-gray-300`}>
                     Potrai chattare con me, Pinci, per scoprire tutti i segreti delle opere!
                   </p>
                 </div>
@@ -185,7 +187,7 @@ export default function Homepage() {
               </div>
             ))
           ) : (
-            <div className="text-center text-white text-xl">
+            <div className={`text-center text-white ${typography.subtitle.classes}`}>
               Nessun itinerario disponibile
             </div>
           )}

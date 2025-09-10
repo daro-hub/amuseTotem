@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import QRCode from "react-qr-code"
 import { X, ChevronRight, ChevronLeft } from "lucide-react"
+import { typography, gradients } from "@/lib/typography"
 
 interface QRCodeDisplayProps {
   qrCodes: string[]
@@ -109,7 +110,7 @@ export default function QRCodeDisplay({
     return (
       <div className="min-h-screen bg-[#121212] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-2xl text-white">Errore nel caricamento dei biglietti</p>
+          <p className={`${typography.subtitle.classes} text-white`}>Errore nel caricamento dei biglietti</p>
         </div>
       </div>
     )
@@ -123,15 +124,15 @@ export default function QRCodeDisplay({
         <div className="fade-in">
           <div className="mb-8">
             <div className="text-8xl mb-6">🎉</div>
-            <h1 className="text-6xl font-bold text-[#8ac926] mb-4">Acquisto Completato!</h1>
-            <p className="text-3xl text-white mb-2">{itineraryTitle}</p>
-            <p className="text-2xl text-gray-300">
+            <h1 className={`${typography.title.classes} text-[#8ac926] mb-4`}>Acquisto Completato!</h1>
+            <p className={`${typography.subtitle.classes} text-white mb-2`}>{itineraryTitle}</p>
+            <p className={`${typography.secondary.classes} text-gray-300`}>
               {tickets} biglietto{tickets > 1 ? "i" : ""} - €{total}
             </p>
           </div>
 
           <div className="mb-12">
-            <h2 className="text-4xl font-bold text-white mb-8">I Tuoi Biglietti QR</h2>
+            <h2 className={`${typography.subtitle.classes} text-white mb-8`}>I Tuoi Biglietti QR</h2>
 
             <div className="flex flex-col items-center gap-6">
               {layout.rows.map((ticketsInRow, rowIndex) => {
@@ -195,9 +196,9 @@ export default function QRCodeDisplay({
           </div>
 
           <div className="bg-gray-800 rounded-3xl p-8 mb-8 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-[#8ac926] mb-4">📧 Ricevuta inviata!</h3>
-            <p className="text-2xl text-white">Abbiamo inviato la ricevuta e i biglietti a:</p>
-            <p className="text-2xl font-bold text-[#3a86ff] mt-2">{email}</p>
+            <h3 className={`${typography.secondary.classes} text-[#8ac926] mb-4`}>📧 Ricevuta inviata!</h3>
+            <p className={`${typography.secondary.classes} text-white`}>Abbiamo inviato la ricevuta e i biglietti a:</p>
+            <p className={`${typography.secondary.classes} text-[#3a86ff] mt-2`}>{email}</p>
           </div>
         </div>
       </div>
