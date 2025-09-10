@@ -53,6 +53,9 @@
     "react-day-picker": "9.8.0",
     "react-dom": "^19",
     "react-hook-form": "^7.54.1",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "react-qr-code": "^2.0.12",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
@@ -60,14 +63,10 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5",
     "vaul": "^1.1.2",
     "zod": "^3.24.1"
   },
-  "devDependencies": {
-    "@types/node": "^22",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "typescript": "^5"
-  }
+  "devDependencies": {}
 }
 
