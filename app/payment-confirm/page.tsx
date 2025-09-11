@@ -6,20 +6,14 @@ import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
 import { buttonStyles, tabletSizes } from '@/lib/colors'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useMuseum } from '@/contexts/MuseumContext'
 import { t } from '@/lib/translations'
 import { typography } from '@/lib/typography'
 
 export default function PaymentConfirm () {
-  const [quantity, setQuantity] = useState(1)
   const router = useRouter()
   const { currentLanguage } = useLanguage()
-
-  useEffect(() => {
-    const savedQuantity = localStorage.getItem('ticketQuantity')
-    if (savedQuantity) {
-      setQuantity(parseInt(savedQuantity))
-    }
-  }, [])
+  const { quantity, totalAmount } = useMuseum()
 
   const handlePay = () => {
     router.push('/payment-process')
@@ -58,7 +52,7 @@ export default function PaymentConfirm () {
               {t('paymentConfirm.quantity', currentLanguage)} {quantity}
             </span>
             <span className={`text-white ${typography.subtitle.classes} font-light`}>
-              {t('paymentConfirm.total', currentLanguage)} €{quantity * 15}
+              {t('paymentConfirm.total', currentLanguage)} €{totalAmount.toFixed(2)}
             </span>
           </div>
         </div>

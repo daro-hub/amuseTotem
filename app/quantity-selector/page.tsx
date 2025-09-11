@@ -6,13 +6,14 @@ import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
 import { buttonStyles, tabletSizes } from '@/lib/colors'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useMuseum } from '@/contexts/MuseumContext'
 import { t } from '@/lib/translations'
 import { typography, gradients } from '@/lib/typography'
 
 export default function QuantitySelector () {
-  const [quantity, setQuantity] = useState(1)
   const router = useRouter()
   const { currentLanguage } = useLanguage()
+  const { quantity, setQuantity, setTotalAmount } = useMuseum()
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -25,7 +26,11 @@ export default function QuantitySelector () {
   }
 
   const handleProceed = () => {
-    // Salva la quantità nel localStorage o context
+    // Calcola l'importo totale (€5.00 per biglietto)
+    const totalAmount = quantity * 5.00
+    setTotalAmount(totalAmount)
+    
+    // Salva la quantità nel localStorage per compatibilità
     localStorage.setItem('ticketQuantity', quantity.toString())
     router.push('/payment-confirm')
   }
