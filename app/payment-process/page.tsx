@@ -5,67 +5,27 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { useMuseum } from '@/contexts/MuseumContext'
 import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
 import { typography } from '@/lib/typography'
-import { useSumUpPayment } from '@/hooks/useSumUpPayment'
-import SumUpStatus from '@/components/SumUpStatus'
 
 export default function PaymentProcess () {
   const router = useRouter()
+  const [isProcessing, setIsProcessing] = useState(false)
   const { currentLanguage } = useLanguage()
-  const { museumData, quantity, totalAmount } = useMuseum()
-  const { 
-    isProcessing, 
-    isConnected, 
-    error, 
-    processPayment, 
-    checkConnection, 
-    clearError 
-  } = useSumUpPayment()
 
   useEffect(() => {
-    // Verifica connessione SumUp al caricamento
-    checkConnection()
-    
-    // Avvia automaticamente il pagamento dopo 2 secondi
+    // Simula il processo di pagamento
     const timer = setTimeout(() => {
-      if (isConnected && museumData && quantity && totalAmount) {
-        handlePayment()
-      }
+      setIsProcessing(true)
+      // Dopo 3 secondi, vai alla thank you page
+      setTimeout(() => {
+        router.push('/thank-you')
+      }, 3000)
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [checkConnection, isConnected, museumData, quantity, totalAmount])
-
-  const handlePayment = async () => {
-    if (!museumData || !quantity || !totalAmount) {
-      console.error('❌ Dati mancanti per il pagamento')
-      return
-    }
-
-    try {
-      const paymentRequest = {
-        amount: totalAmount,
-        currency: 'EUR',
-        description: `Biglietti ${museumData.museum_name} - ${quantity}x`
-      }
-
-      console.log('🔄 Avviando pagamento SumUp:', paymentRequest)
-      
-      const result = await processPayment(paymentRequest)
-      
-      if (result.success) {
-        console.log('✅ Pagamento completato:', result)
-        router.push('/thank-you')
-      } else {
-        console.error('❌ Pagamento fallito:', result.error)
-      }
-    } catch (err) {
-      console.error('❌ Errore durante il pagamento:', err)
-    }
-  }
+  }, [router])
 
   const handleBack = () => {
     router.push('/payment-confirm')
@@ -88,14 +48,6 @@ export default function PaymentProcess () {
           <p className="text-white text-3xl font-light text-center">
             {t('paymentProcess.instructions', currentLanguage)}
           </p>
-          
-          {/* Stato connessione SumUp */}
-          <SumUpStatus
-            isConnected={isConnected}
-            isProcessing={isProcessing}
-            error={error}
-            onRetry={checkConnection}
-          />
         </div>
 
         {/* Immagine pay.png */}
@@ -105,26 +57,6 @@ export default function PaymentProcess () {
             alt="Payment" 
             className="max-w-full max-h-full object-contain"
           />
-        </div>
-
-        {/* Stato pagamento automatico */}
-        <div className="w-full max-w-md text-center">
-          {isProcessing ? (
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              <span className="text-white text-2xl font-medium">
-                {t('sumup.processing', currentLanguage)}
-              </span>
-            </div>
-          ) : isConnected ? (
-            <p className="text-white text-2xl font-medium">
-              {t('paymentProcess.instructions', currentLanguage)}
-            </p>
-          ) : (
-            <p className="text-red-400 text-2xl font-medium">
-              {t('sumup.disconnected', currentLanguage)}
-            </p>
-          )}
         </div>
 
         {/* Indicatore di caricamento */}

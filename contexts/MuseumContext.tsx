@@ -43,10 +43,6 @@ interface MuseumContextType {
   isLoading: boolean
   error: string | null
   fetchMuseumData: (museumId: string) => Promise<void>
-  quantity: number
-  setQuantity: (quantity: number) => void
-  totalAmount: number
-  setTotalAmount: (amount: number) => void
 }
 
 const MuseumContext = createContext<MuseumContextType | undefined>(undefined)
@@ -56,8 +52,6 @@ export function MuseumProvider({ children }: { children: ReactNode }) {
   const [currentMuseumId, setCurrentMuseumId] = useState('default-museum')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [quantity, setQuantity] = useState(1)
-  const [totalAmount, setTotalAmount] = useState(5.00)
 
   const fetchMuseumData = async (museumId: string) => {
     setIsLoading(true)
@@ -145,11 +139,7 @@ export function MuseumProvider({ children }: { children: ReactNode }) {
     },
     isLoading,
     error,
-    fetchMuseumData,
-    quantity,
-    setQuantity,
-    totalAmount,
-    setTotalAmount
+    fetchMuseumData
   }
 
   return (
