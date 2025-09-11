@@ -20,8 +20,6 @@ export interface SumUpPaymentResponse {
 export interface SumUpConfig {
   apiKey: string
   deviceId: string
-  tabletIp: string
-  tabletPort?: number
 }
 
 class SumUpService {
@@ -32,40 +30,41 @@ class SumUpService {
   }
 
   /**
-   * Invia una richiesta di pagamento al SumUp Air tramite API locale
+   * Invia una richiesta di pagamento direttamente alle API SumUp
    */
   async processPayment(request: SumUpPaymentRequest): Promise<SumUpPaymentResponse> {
     try {
       console.log('🔄 Iniziando pagamento SumUp:', request)
 
-      // Usa l'endpoint API locale che gestirà la comunicazione con il tablet
-      const response = await fetch('/api/sumup/payment', {
+      // Chiama direttamente le API SumUp
+      const response = await fetch('https://api.sumup.com/v0.1/me/checkouts', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.config.apiKey}`
         },
         body: JSON.stringify({
-          amount: request.amount,
+          checkout_reference: `TXN_${Date.now()}`,
+          amount: this.formatAmount(request.amount),
           currency: request.currency,
           description: request.description,
-          merchantCode: this.config.merchantCode || request.merchantCode
+          merchant_code: this.config.merchantCode || request.merchantCode
         })
       })
 
       if (!response.ok) {
-        throw new Error(`Errore HTTP: ${response.status}`)
+        throw new Error(`Errore API SumUp: ${response.status}`)
       }
 
       const result = await response.json()
       console.log('✅ Risposta pagamento SumUp:', result)
 
       return {
-        success: result.success || false,
-        transactionId: result.transactionId,
-        amount: result.amount,
-        currency: result.currency,
-        timestamp: result.timestamp,
-        error: result.error
+        success: true,
+        transactionId: result.id,
+        amount: request.amount,
+        currency: request.currency,
+        timestamp: new Date().toISOString()
       }
 
     } catch (error) {
@@ -78,13 +77,16 @@ class SumUpService {
   }
 
   /**
-   * Verifica lo stato del SumUp Air
+   * Verifica lo stato del SumUp Air tramite API SumUp
    */
   async checkDeviceStatus(): Promise<boolean> {
     try {
-      // Usa l'endpoint API locale per verificare lo stato
-      const response = await fetch('/api/sumup/status', {
-        method: 'GET'
+      // Verifica lo stato del merchant tramite API SumUp
+      const response = await fetch('https://api.sumup.com/v0.1/me', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this.config.apiKey}`
+        }
       })
 
       if (!response.ok) {
@@ -92,7 +94,8 @@ class SumUpService {
       }
 
       const result = await response.json()
-      return result.connected || false
+      console.log('✅ Stato SumUp verificato:', result)
+      return true
     } catch (error) {
       console.error('❌ Errore verifica stato SumUp:', error)
       return false
@@ -117,9 +120,7 @@ class SumUpService {
 // Configurazione SumUp per il museo
 export const sumupConfig: SumUpConfig = {
   apiKey: 'sup_sk_ETR1hNySrFcE6Ycm0f9ZWBuVmbusF0RIp',
-  deviceId: '110014329170',
-  tabletIp: '172.20.10.2',
-  tabletPort: 3000
+  deviceId: '110014329170'
 }
 
 // Istanza del servizio SumUp

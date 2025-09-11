@@ -282,6 +282,128 @@ export const translations: Translations = {
     th: 'การซื้อใหม่', vi: 'Mua Mới', he: 'רכישה חדשה', fa: 'خرید جدید', tl: 'Bagong Pagbili',
     ms: 'Pembelian Baru', sw: 'Ununuzi Mpya', cs: 'Nový Nákup', fi: 'Uusi Osto',
     no: 'Nytt Kjøp', hi: 'नई खरीदारी'
+  },
+  
+  // SumUp Integration
+  'sumup.connected': {
+    it: 'SumUp Air Connesso', en: 'SumUp Air Connected', es: 'SumUp Air Conectado', fr: 'SumUp Air Connecté', de: 'SumUp Air Verbunden',
+    sv: 'SumUp Air Ansluten', pt: 'SumUp Air Conectado', zh: 'SumUp Air 已连接', jp: 'SumUp Air 接続済み', ko: 'SumUp Air 연결됨',
+    ar: 'SumUp Air متصل', pl: 'SumUp Air Połączony', ru: 'SumUp Air Подключен', sl: 'SumUp Air Povezan', hu: 'SumUp Air Csatlakoztatva',
+    sk: 'SumUp Air Pripojený', uk: 'SumUp Air Підключено', ro: 'SumUp Air Conectat', da: 'SumUp Air Tilsluttet', tr: 'SumUp Air Bağlandı',
+    el: 'SumUp Air Συνδεδεμένο', bn: 'SumUp Air সংযুক্ত', nl: 'SumUp Air Verbonden', sq: 'SumUp Air i Lidhur', id: 'SumUp Air Terhubung',
+    th: 'SumUp Air เชื่อมต่อแล้ว', vi: 'SumUp Air Đã Kết Nối', he: 'SumUp Air מחובר', fa: 'SumUp Air متصل', tl: 'SumUp Air Nakakonekta',
+    ms: 'SumUp Air Disambung', sw: 'SumUp Air Imeshikamana', cs: 'SumUp Air Připojeno', fi: 'SumUp Air Yhdistetty',
+    no: 'SumUp Air Koblet til', hi: 'SumUp Air जुड़ा हुआ'
+  },
+  'sumup.disconnected': {
+    it: 'SumUp Air Non Connesso', en: 'SumUp Air Not Connected', es: 'SumUp Air No Conectado', fr: 'SumUp Air Non Connecté', de: 'SumUp Air Nicht Verbunden',
+    sv: 'SumUp Air Inte Ansluten', pt: 'SumUp Air Não Conectado', zh: 'SumUp Air 未连接', jp: 'SumUp Air 未接続', ko: 'SumUp Air 연결 안됨',
+    ar: 'SumUp Air غير متصل', pl: 'SumUp Air Nie Połączony', ru: 'SumUp Air Не Подключен', sl: 'SumUp Air Ni Povezan', hu: 'SumUp Air Nincs Csatlakoztatva',
+    sk: 'SumUp Air Nie Je Pripojený', uk: 'SumUp Air Не Підключено', ro: 'SumUp Air Neconectat', da: 'SumUp Air Ikke Tilsluttet', tr: 'SumUp Air Bağlı Değil',
+    el: 'SumUp Air Μη Συνδεδεμένο', bn: 'SumUp Air সংযুক্ত নয়', nl: 'SumUp Air Niet Verbonden', sq: 'SumUp Air Nuk Është i Lidhur', id: 'SumUp Air Tidak Terhubung',
+    th: 'SumUp Air ไม่ได้เชื่อมต่อ', vi: 'SumUp Air Chưa Kết Nối', he: 'SumUp Air לא מחובר', fa: 'SumUp Air متصل نیست', tl: 'SumUp Air Hindi Nakakonekta',
+    ms: 'SumUp Air Tidak Disambung', sw: 'SumUp Air Haijaunganishwa', cs: 'SumUp Air Není Připojeno', fi: 'SumUp Air Ei Yhdistetty',
+    no: 'SumUp Air Ikke Koblet til', hi: 'SumUp Air जुड़ा नहीं है'
+  },
+  'sumup.processing': {
+    it: 'Processando...', en: 'Processing...', es: 'Procesando...', fr: 'Traitement...', de: 'Verarbeitung...',
+    sv: 'Bearbetar...', pt: 'Processando...', zh: '处理中...', jp: '処理中...', ko: '처리 중...',
+    ar: 'جاري المعالجة...', pl: 'Przetwarzanie...', ru: 'Обработка...', sl: 'Obdelovanje...', hu: 'Feldolgozás...',
+    sk: 'Spracovanie...', uk: 'Обробка...', ro: 'Procesare...', da: 'Behandler...', tr: 'İşleniyor...',
+    el: 'Επεξεργασία...', bn: 'প্রক্রিয়াকরণ...', nl: 'Verwerken...', sq: 'Duke u Përpunuar...', id: 'Memproses...',
+    th: 'กำลังประมวลผล...', vi: 'Đang xử lý...', he: 'מעבד...', fa: 'در حال پردازش...', tl: 'Pinoproseso...',
+    ms: 'Memproses...', sw: 'Inachakata...', cs: 'Zpracování...', fi: 'Käsittely...',
+    no: 'Behandler...', hi: 'प्रसंस्करण...'
+  },
+  'sumup.payWithSumUp': {
+    it: 'Paga con SumUp', en: 'Pay with SumUp', es: 'Pagar con SumUp', fr: 'Payer avec SumUp', de: 'Mit SumUp Bezahlen',
+    sv: 'Betala med SumUp', pt: 'Pagar com SumUp', zh: '使用 SumUp 支付', jp: 'SumUp で支払う', ko: 'SumUp으로 결제',
+    ar: 'ادفع مع SumUp', pl: 'Zapłać z SumUp', ru: 'Оплатить через SumUp', sl: 'Plajaj z SumUp', hu: 'Fizess SumUp-pal',
+    sk: 'Zaplať s SumUp', uk: 'Сплатити з SumUp', ro: 'Plătește cu SumUp', da: 'Betal med SumUp', tr: 'SumUp ile Öde',
+    el: 'Πλήρωσε με SumUp', bn: 'SumUp দিয়ে পেমেন্ট করুন', nl: 'Betalen met SumUp', sq: 'Paguaj me SumUp', id: 'Bayar dengan SumUp',
+    th: 'ชำระเงินด้วย SumUp', vi: 'Thanh Toán với SumUp', he: 'שלם עם SumUp', fa: 'پرداخت با SumUp', tl: 'Magbayad gamit ang SumUp',
+    ms: 'Bayar dengan SumUp', sw: 'Lipa na SumUp', cs: 'Zaplatit s SumUp', fi: 'Maksa SumUp:lla',
+    no: 'Betal med SumUp', hi: 'SumUp से भुगतान करें'
+  },
+  'sumup.retry': {
+    it: 'Riprova', en: 'Retry', es: 'Reintentar', fr: 'Réessayer', de: 'Wiederholen',
+    sv: 'Försök igen', pt: 'Tentar novamente', zh: '重试', jp: '再試行', ko: '다시 시도',
+    ar: 'إعادة المحاولة', pl: 'Spróbuj ponownie', ru: 'Повторить', sl: 'Poskusi znova', hu: 'Újra próbálás',
+    sk: 'Skúsiť znova', uk: 'Повторити', ro: 'Încearcă din nou', da: 'Prøv igen', tr: 'Tekrar Dene',
+    el: 'Δοκιμάστε ξανά', bn: 'আবার চেষ্টা করুন', nl: 'Opnieuw proberen', sq: 'Provo përsëri', id: 'Coba lagi',
+    th: 'ลองใหม่', vi: 'Thử lại', he: 'נסה שוב', fa: 'دوباره تلاش کنید', tl: 'Subukan muli',
+    ms: 'Cuba lagi', sw: 'Jaribu tena', cs: 'Zkusit znovu', fi: 'Yritä uudelleen',
+    no: 'Prøv igjen', hi: 'पुनः प्रयास करें'
+  },
+  'sumup.showDetails': {
+    it: 'Mostra dettagli tecnici', en: 'Show technical details', es: 'Mostrar detalles técnicos', fr: 'Afficher les détails techniques', de: 'Technische Details anzeigen',
+    sv: 'Visa tekniska detaljer', pt: 'Mostrar detalhes técnicos', zh: '显示技术详情', jp: '技術詳細を表示', ko: '기술 세부사항 표시',
+    ar: 'إظهار التفاصيل التقنية', pl: 'Pokaż szczegóły techniczne', ru: 'Показать технические детали', sl: 'Prikaži tehnične podrobnosti', hu: 'Technikai részletek megjelenítése',
+    sk: 'Zobraziť technické detaily', uk: 'Показати технічні деталі', ro: 'Afișați detaliile tehnice', da: 'Vis tekniske detaljer', tr: 'Teknik detayları göster',
+    el: 'Εμφάνιση τεχνικών λεπτομερειών', bn: 'প্রযুক্তিগত বিবরণ দেখান', nl: 'Technische details tonen', sq: 'Shfaq detajet teknike', id: 'Tampilkan detail teknis',
+    th: 'แสดงรายละเอียดทางเทคนิค', vi: 'Hiển thị chi tiết kỹ thuật', he: 'הצג פרטים טכניים', fa: 'نمایش جزئیات فنی', tl: 'Ipakita ang mga teknikal na detalye',
+    ms: 'Tunjukkan butiran teknikal', sw: 'Onyesha maelezo ya kiufundi', cs: 'Zobrazit technické podrobnosti', fi: 'Näytä tekniset tiedot',
+    no: 'Vis tekniske detaljer', hi: 'तकनीकी विवरण दिखाएं'
+  },
+  'sumup.hideDetails': {
+    it: 'Nascondi dettagli tecnici', en: 'Hide technical details', es: 'Ocultar detalles técnicos', fr: 'Masquer les détails techniques', de: 'Technische Details ausblenden',
+    sv: 'Dölj tekniska detaljer', pt: 'Ocultar detalhes técnicos', zh: '隐藏技术详情', jp: '技術詳細を非表示', ko: '기술 세부사항 숨기기',
+    ar: 'إخفاء التفاصيل التقنية', pl: 'Ukryj szczegóły techniczne', ru: 'Скрыть технические детали', sl: 'Skrij tehnične podrobnosti', hu: 'Technikai részletek elrejtése',
+    sk: 'Skryť technické detaily', uk: 'Приховати технічні деталі', ro: 'Ascunde detaliile tehnice', da: 'Skjul tekniske detaljer', tr: 'Teknik detayları gizle',
+    el: 'Απόκρυψη τεχνικών λεπτομερειών', bn: 'প্রযুক্তিগত বিবরণ লুকান', nl: 'Technische details verbergen', sq: 'Fshihi detajet teknike', id: 'Sembunyikan detail teknis',
+    th: 'ซ่อนรายละเอียดทางเทคนิค', vi: 'Ẩn chi tiết kỹ thuật', he: 'הסתר פרטים טכניים', fa: 'مخفی کردن جزئیات فنی', tl: 'Itago ang mga teknikal na detalye',
+    ms: 'Sembunyikan butiran teknikal', sw: 'Ficha maelezo ya kiufundi', cs: 'Skrýt technické podrobnosti', fi: 'Piilota tekniset tiedot',
+    no: 'Skjul tekniske detaljer', hi: 'तकनीकी विवरण छुपाएं'
+  },
+  'sumup.deviceId': {
+    it: 'ID Dispositivo:', en: 'Device ID:', es: 'ID del Dispositivo:', fr: 'ID de l\'Appareil:', de: 'Geräte-ID:',
+    sv: 'Enhets-ID:', pt: 'ID do Dispositivo:', zh: '设备ID:', jp: 'デバイスID:', ko: '기기 ID:',
+    ar: 'معرف الجهاز:', pl: 'ID Urządzenia:', ru: 'ID Устройства:', sl: 'ID Naprave:', hu: 'Eszköz ID:',
+    sk: 'ID Zariadenia:', uk: 'ID Пристрою:', ro: 'ID Dispozitiv:', da: 'Enheds-ID:', tr: 'Cihaz ID:',
+    el: 'ID Συσκευής:', bn: 'ডিভাইস ID:', nl: 'Apparaat-ID:', sq: 'ID e Pajisjes:', id: 'ID Perangkat:',
+    th: 'รหัสอุปกรณ์:', vi: 'ID Thiết bị:', he: 'מזהה מכשיר:', fa: 'شناسه دستگاه:', tl: 'ID ng Device:',
+    ms: 'ID Peranti:', sw: 'Kitambulisho cha Kifaa:', cs: 'ID Zařízení:', fi: 'Laitteen ID:',
+    no: 'Enhets-ID:', hi: 'डिवाइस ID:'
+  },
+  'sumup.tabletIp': {
+    it: 'IP Tablet:', en: 'Tablet IP:', es: 'IP de la Tableta:', fr: 'IP de la Tablette:', de: 'Tablet-IP:',
+    sv: 'Surfplatta IP:', pt: 'IP do Tablet:', zh: '平板IP:', jp: 'タブレットIP:', ko: '태블릿 IP:',
+    ar: 'عنوان IP للجهاز اللوحي:', pl: 'IP Tabletu:', ru: 'IP Планшета:', sl: 'IP Tabličnega računalnika:', hu: 'Tablet IP:',
+    sk: 'IP Tabletu:', uk: 'IP Планшета:', ro: 'IP Tablet:', da: 'Tablet IP:', tr: 'Tablet IP:',
+    el: 'IP Tablet:', bn: 'ট্যাবলেট IP:', nl: 'Tablet IP:', sq: 'IP e Tabletit:', id: 'IP Tablet:',
+    th: 'IP แท็บเล็ต:', vi: 'IP Máy tính bảng:', he: 'IP טאבלט:', fa: 'IP تبلت:', tl: 'IP ng Tablet:',
+    ms: 'IP Tablet:', sw: 'IP ya Kibao:', cs: 'IP Tabletu:', fi: 'Tabletin IP:',
+    no: 'Tablet IP:', hi: 'टैबलेट IP:'
+  },
+  'sumup.status': {
+    it: 'Stato:', en: 'Status:', es: 'Estado:', fr: 'Statut:', de: 'Status:',
+    sv: 'Status:', pt: 'Status:', zh: '状态:', jp: 'ステータス:', ko: '상태:',
+    ar: 'الحالة:', pl: 'Status:', ru: 'Статус:', sl: 'Status:', hu: 'Állapot:',
+    sk: 'Stav:', uk: 'Статус:', ro: 'Status:', da: 'Status:', tr: 'Durum:',
+    el: 'Κατάσταση:', bn: 'অবস্থা:', nl: 'Status:', sq: 'Statusi:', id: 'Status:',
+    th: 'สถานะ:', vi: 'Trạng thái:', he: 'סטטוס:', fa: 'وضعیت:', tl: 'Katayuan:',
+    ms: 'Status:', sw: 'Hali:', cs: 'Stav:', fi: 'Tila:',
+    no: 'Status:', hi: 'स्थिति:'
+  },
+  'sumup.online': {
+    it: 'Online', en: 'Online', es: 'En Línea', fr: 'En Ligne', de: 'Online',
+    sv: 'Online', pt: 'Online', zh: '在线', jp: 'オンライン', ko: '온라인',
+    ar: 'متصل', pl: 'Online', ru: 'Онлайн', sl: 'Na Spletu', hu: 'Online',
+    sk: 'Online', uk: 'Онлайн', ro: 'Online', da: 'Online', tr: 'Çevrimiçi',
+    el: 'Συνδεδεμένο', bn: 'অনলাইন', nl: 'Online', sq: 'Online', id: 'Online',
+    th: 'ออนไลน์', vi: 'Trực tuyến', he: 'מקוון', fa: 'آنلاین', tl: 'Online',
+    ms: 'Dalam Talian', sw: 'Mtandaoni', cs: 'Online', fi: 'Verkossa',
+    no: 'Online', hi: 'ऑनलाइन'
+  },
+  'sumup.offline': {
+    it: 'Offline', en: 'Offline', es: 'Desconectado', fr: 'Hors Ligne', de: 'Offline',
+    sv: 'Offline', pt: 'Offline', zh: '离线', jp: 'オフライン', ko: '오프라인',
+    ar: 'غير متصل', pl: 'Offline', ru: 'Офлайн', sl: 'Iz Spleta', hu: 'Offline',
+    sk: 'Offline', uk: 'Офлайн', ro: 'Offline', da: 'Offline', tr: 'Çevrimdışı',
+    el: 'Αποσυνδεδεμένο', bn: 'অফলাইন', nl: 'Offline', sq: 'Offline', id: 'Offline',
+    th: 'ออฟไลน์', vi: 'Ngoại tuyến', he: 'לא מקוון', fa: 'آفلاین', tl: 'Offline',
+    ms: 'Luar Talian', sw: 'Nje ya Mtandaoni', cs: 'Offline', fi: 'Verkosta poissa',
+    no: 'Offline', hi: 'ऑफलाइन'
   }
 }
 

@@ -110,10 +110,10 @@ export default function PaymentProcess () {
             {isProcessing ? (
               <div className="flex items-center space-x-2">
                 <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                <span>Processando...</span>
+                <span>{t('sumup.processing', currentLanguage)}</span>
               </div>
             ) : (
-              'Paga con SumUp'
+              t('sumup.payWithSumUp', currentLanguage)
             )}
           </Button>
         </div>
