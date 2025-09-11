@@ -28,7 +28,16 @@ export default function PaymentProcess () {
   useEffect(() => {
     // Verifica connessione SumUp al caricamento
     checkConnection()
-  }, [checkConnection])
+    
+    // Avvia automaticamente il pagamento dopo 2 secondi
+    const timer = setTimeout(() => {
+      if (isConnected && museumData && quantity && totalAmount) {
+        handlePayment()
+      }
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [checkConnection, isConnected, museumData, quantity, totalAmount])
 
   const handlePayment = async () => {
     if (!museumData || !quantity || !totalAmount) {
@@ -98,24 +107,24 @@ export default function PaymentProcess () {
           />
         </div>
 
-        {/* Pulsante pagamento */}
-        <div className="w-full max-w-md">
-          <Button
-            onClick={handlePayment}
-            disabled={!isConnected || isProcessing}
-            className={`w-full h-16 bg-white text-black hover:bg-gray-200 rounded-lg text-3xl font-light ${
-              !isConnected ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-          >
-            {isProcessing ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                <span>{t('sumup.processing', currentLanguage)}</span>
-              </div>
-            ) : (
-              t('sumup.payWithSumUp', currentLanguage)
-            )}
-          </Button>
+        {/* Stato pagamento automatico */}
+        <div className="w-full max-w-md text-center">
+          {isProcessing ? (
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span className="text-white text-2xl font-medium">
+                {t('sumup.processing', currentLanguage)}
+              </span>
+            </div>
+          ) : isConnected ? (
+            <p className="text-white text-2xl font-medium">
+              {t('paymentProcess.instructions', currentLanguage)}
+            </p>
+          ) : (
+            <p className="text-red-400 text-2xl font-medium">
+              {t('sumup.disconnected', currentLanguage)}
+            </p>
+          )}
         </div>
 
         {/* Indicatore di caricamento */}
