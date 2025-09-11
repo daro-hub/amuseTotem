@@ -96,12 +96,17 @@ export function PaymentTerminal({
           </button>
           
           {!isTerminalConnected && (
-            <button
-              onClick={checkTerminalStatus}
-              className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-            >
-              Verifica Connessione
-            </button>
+            <div className="space-y-2">
+              <button
+                onClick={checkTerminalStatus}
+                className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+              >
+                Verifica Connessione
+              </button>
+              <p className="text-xs text-gray-400">
+                Assicurati che l'app SumUp sia aperta e il terminale connesso via Bluetooth
+              </p>
+            </div>
           )}
         </div>
       )}

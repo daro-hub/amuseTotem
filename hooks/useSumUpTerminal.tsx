@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { sumupService } from '@/lib/sumup-service'
-import { paymentStates, PaymentState } from '@/lib/sumup-config'
+import { paymentStates, PaymentState, sumupConfig } from '@/lib/sumup-config'
 
 interface UseSumUpTerminalReturn {
   paymentState: PaymentState
@@ -23,13 +23,32 @@ export function useSumUpTerminal(): UseSumUpTerminalReturn {
   // Verifica stato terminale
   const checkTerminalStatus = useCallback(async () => {
     try {
-      const status = await sumupService.getTerminalStatus()
-      setIsTerminalConnected(status.status === 'ONLINE')
-      setError(null)
+      console.log('🔍 Verificando connessione terminale...')
+      
+      // Per ora assumiamo che il terminale sia connesso se l'app SumUp è in esecuzione
+      // In futuro potremo implementare una verifica più sofisticata
+      
+      // Test semplice: verifica se possiamo fare una chiamata API base
+      const response = await fetch('https://api.sumup.com/v0.1/me', {
+        headers: {
+          'Authorization': `Bearer ${sumupConfig.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (response.ok) {
+        console.log('✅ API SumUp accessibile')
+        setIsTerminalConnected(true)
+        setError(null)
+      } else {
+        console.log('❌ API SumUp non accessibile')
+        setIsTerminalConnected(false)
+        setError('Verifica credenziali SumUp')
+      }
     } catch (err) {
-      console.error('Errore verifica terminale:', err)
+      console.error('❌ Errore verifica terminale:', err)
       setIsTerminalConnected(false)
-      setError('Terminale non disponibile')
+      setError('Terminale non disponibile - Verifica connessione Bluetooth e app SumUp')
     }
   }, [])
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
 import { PaymentTerminal } from '@/components/PaymentTerminal'
+import { DebugPanel } from '@/components/DebugPanel'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useMuseum } from '@/contexts/MuseumContext'
 import { t } from '@/lib/translations'
@@ -128,6 +129,9 @@ export default function PaymentProcess () {
           {t('back', currentLanguage)}
         </Button>
       </div>
+
+      {/* Debug Panel */}
+      <DebugPanel />
     </div>
   )
 }
