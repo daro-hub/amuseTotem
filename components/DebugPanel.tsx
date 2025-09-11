@@ -26,7 +26,8 @@ export function DebugPanel() {
     addLog('info', '🔍 Testando connessione SumUp...')
     
     try {
-      // Test API base
+      // Test API /me
+      addLog('info', '📡 Test API /me...')
       const response = await fetch('https://api.sumup.com/v0.1/me', {
         headers: {
           'Authorization': `Bearer ${sumupConfig.accessToken}`,
@@ -36,18 +37,136 @@ export function DebugPanel() {
 
       if (response.ok) {
         const data = await response.json()
-        addLog('success', `✅ API OK - Account: ${data.merchant_code || 'N/A'}`)
+        addLog('success', `✅ API /me OK`)
+        addLog('info', `📊 Dati account: ${JSON.stringify(data, null, 2)}`)
       } else {
-        addLog('error', `❌ API Error: ${response.status} ${response.statusText}`)
+        const errorText = await response.text()
+        addLog('error', `❌ API /me Error: ${response.status} ${response.statusText}`)
+        addLog('error', `📄 Risposta: ${errorText}`)
       }
     } catch (err) {
-      addLog('error', `❌ Errore rete: ${err instanceof Error ? err.message : 'Sconosciuto'}`)
+      addLog('error', `❌ Errore rete /me: ${err instanceof Error ? err.message : 'Sconosciuto'}`)
+    }
+
+    try {
+      // Test API /transactions
+      addLog('info', '📡 Test API /transactions...')
+      const transResponse = await fetch('https://api.sumup.com/v0.1/me/transactions?limit=1', {
+        headers: {
+          'Authorization': `Bearer ${sumupConfig.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (transResponse.ok) {
+        const transData = await transResponse.json()
+        addLog('success', `✅ API /transactions OK`)
+        addLog('info', `💳 Ultime transazioni: ${transData.length || 0}`)
+      } else {
+        const errorText = await transResponse.text()
+        addLog('error', `❌ API /transactions Error: ${transResponse.status}`)
+        addLog('error', `📄 Risposta: ${errorText}`)
+      }
+    } catch (err) {
+      addLog('error', `❌ Errore rete /transactions: ${err instanceof Error ? err.message : 'Sconosciuto'}`)
     }
 
     // Test configurazione
     addLog('info', `🔧 Config - Terminal: ${sumupConfig.terminalId}`)
     addLog('info', `🔧 Config - Merchant: ${sumupConfig.merchantCode}`)
     addLog('info', `🔧 Config - Token: ${sumupConfig.accessToken.substring(0, 20)}...`)
+  }
+
+  const testCreateTransaction = async () => {
+    addLog('info', '💳 Test creazione transazione...')
+    
+    try {
+      const response = await fetch('https://api.sumup.com/v0.1/checkouts', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer sup_sk_ETR1hNySrFcE6Ycm0f9ZWBuVmbusF0RIp`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          checkout_reference: `test-${Date.now()}`,
+          amount: 1.00,
+          currency: 'EUR',
+          description: 'Test pagamento',
+          merchant_code: 'MW3ZRZS2',
+          return_url: `${window.location.origin}/thank-you`,
+          cancel_url: `${window.location.origin}/payment-confirm`
+        })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        addLog('success', `✅ Checkout creato: ${data.id}`)
+        addLog('info', `🔗 URL: ${data.checkout_url}`)
+      } else {
+        const errorText = await response.text()
+        addLog('error', `❌ Errore checkout: ${response.status}`)
+        addLog('error', `📄 Risposta: ${errorText}`)
+      }
+    } catch (err) {
+      addLog('error', `❌ Errore creazione checkout: ${err instanceof Error ? err.message : 'Sconosciuto'}`)
+    }
+  }
+
+  const testSpecificAPI = async () => {
+    addLog('info', '🎯 Test API key specifica...')
+    
+    // Test con la tua API key specifica
+    const apiKey = 'sup_sk_ETR1hNySrFcE6Ycm0f9ZWBuVmbusF0RIp'
+    
+    try {
+      // Test 1: Verifica account
+      addLog('info', '📡 Test /me con API key specifica...')
+      const meResponse = await fetch('https://api.sumup.com/v0.1/me', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (meResponse.ok) {
+        const meData = await meResponse.json()
+        addLog('success', `✅ Account verificato!`)
+        addLog('info', `👤 Email: ${meData.email || 'N/A'}`)
+        addLog('info', `🏪 Merchant: ${meData.merchant_code || 'N/A'}`)
+        addLog('info', `🌍 Paese: ${meData.country || 'N/A'}`)
+        addLog('info', `💼 Business: ${meData.personal_profile?.first_name || 'N/A'} ${meData.personal_profile?.last_name || 'N/A'}`)
+      } else {
+        const errorText = await meResponse.text()
+        addLog('error', `❌ Errore /me: ${meResponse.status} ${meResponse.statusText}`)
+        addLog('error', `📄 Dettaglio: ${errorText}`)
+      }
+
+      // Test 2: Verifica terminali
+      addLog('info', '📡 Test terminali...')
+      const terminalsResponse = await fetch('https://api.sumup.com/v0.1/me/terminals', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (terminalsResponse.ok) {
+        const terminalsData = await terminalsResponse.json()
+        addLog('success', `✅ Terminali trovati: ${terminalsData.length || 0}`)
+        if (terminalsData.length > 0) {
+          terminalsData.forEach((terminal: any, index: number) => {
+            addLog('info', `🖥️ Terminal ${index + 1}: ${terminal.id} (${terminal.status || 'N/A'})`)
+          })
+        }
+      } else {
+        const errorText = await terminalsResponse.text()
+        addLog('error', `❌ Errore terminali: ${terminalsResponse.status}`)
+        addLog('error', `📄 Dettaglio: ${errorText}`)
+      }
+
+    } catch (err) {
+      addLog('error', `❌ Errore test API: ${err instanceof Error ? err.message : 'Sconosciuto'}`)
+    }
   }
 
   const clearLogs = () => {
@@ -87,12 +206,24 @@ export function DebugPanel() {
             {/* Contenuto */}
             <div className="flex-1 p-4 overflow-auto">
               {/* Pulsanti test */}
-              <div className="space-x-2 mb-4">
+              <div className="space-x-2 mb-4 flex flex-wrap gap-2">
                 <button
                   onClick={testConnection}
                   className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm"
                 >
-                  Test Connessione
+                  Test Base
+                </button>
+                <button
+                  onClick={testSpecificAPI}
+                  className="px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded text-sm"
+                >
+                  Test API Key
+                </button>
+                <button
+                  onClick={testCreateTransaction}
+                  className="px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm"
+                >
+                  Test Checkout
                 </button>
                 <button
                   onClick={clearLogs}

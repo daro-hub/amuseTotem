@@ -77,14 +77,22 @@ class SumUpService {
     status: 'PENDING' | 'SUCCESSFUL' | 'FAILED'
     checkout_url?: string
   }> {
-    return this.makeRequest('/me/transactions', {
-      method: 'POST',
-      body: JSON.stringify({
-        ...data,
-        terminal_id: sumupConfig.terminalId,
-        merchant_code: sumupConfig.merchantCode
-      })
+    // Per ora usiamo il sistema di checkout standard
+    // Il terminale fisico funziona meglio con i checkout URL
+    const checkoutData = await this.createCheckout({
+      amount: data.amount / 100, // Converti da centesimi a euro
+      currency: data.currency,
+      description: data.description,
+      checkout_reference: data.reference,
+      return_url: `${typeof window !== 'undefined' ? window.location.origin : ''}/thank-you`,
+      cancel_url: `${typeof window !== 'undefined' ? window.location.origin : ''}/payment-confirm`
     })
+
+    return {
+      transaction_id: checkoutData.id,
+      status: 'PENDING',
+      checkout_url: checkoutData.checkout_url
+    }
   }
 }
 
