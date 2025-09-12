@@ -5,8 +5,10 @@ import { useRouter, useParams } from "next/navigation"
 import NavigationBar from "@/components/NavigationBar"
 import { Mail, Minus, Plus, CreditCard, Shield } from "lucide-react"
 import { generateMultipleTickets } from "@/lib/ticket-service"
+import { PaymentService, PaymentData } from "@/lib/payment-service"
 import { useMuseum } from "@/contexts/MuseumContext"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { t } from "@/lib/translations"
 
 // Interfacce TypeScript
 interface Itinerary {
@@ -148,7 +150,7 @@ export default function Purchase() {
 
   const handlePurchase = async () => {
     if (!email || !email.includes("@")) {
-      alert(t('enterValidEmail'))
+      alert(t('enterValidEmail', currentLanguage))
       return
     }
 
@@ -159,37 +161,56 @@ export default function Purchase() {
       const museumCode = museumData?.code
       
       if (!museumCode) {
-        alert(t('museumCodeNotFound'))
+        alert(t('museumCodeNotFound', currentLanguage))
         setIsProcessing(false)
         return
       }
 
-      // Genera i ticket codes reali tramite API
-      console.log('🔄 Generando ticket codes...')
-      const generatedTickets = await generateMultipleTickets(tickets, museumCode)
-      console.log('✅ Tickets generati:', generatedTickets)
-      
-      // Estrai solo gli URL dei QR codes
-      const qrCodes = generatedTickets.map(ticket => ticket.qrCode || '')
-      console.log('✅ QR Codes (URL di check-in) estratti:')
-      qrCodes.forEach((url, index) => {
-        console.log(`  Ticket ${index + 1}: ${url}`)
-      })
+      // Genera un orderId univoco per il pagamento
+      const orderId = PaymentService.generateOrderId()
+      console.log('💳 Generato orderId per pagamento SumUp:', orderId)
 
-      const purchaseData = {
+      // Prepara i dati del pagamento per SumUp
+      const paymentData: PaymentData = {
+        orderId,
+        amount: PaymentService.formatAmount(totalPrice),
+        currency: 'EUR',
+        museumCode,
+        tickets,
+        email
+      }
+
+      console.log('💳 Dati pagamento preparati:', paymentData)
+
+      // Salva i dati dell'itinerario e dell'acquisto temporaneamente
+      const tempPurchaseData = {
         itinerary: itinerary.title,
         tickets,
         email,
         total: totalPrice,
-        qrCodes: qrCodes,
-        museumCode: museumCode
+        museumCode: museumCode,
+        orderId: orderId,
+        paymentPending: true
+      }
+      localStorage.setItem("tempPurchaseData", JSON.stringify(tempPurchaseData))
+
+      // Apri l'app Android per il pagamento SumUp
+      console.log('🔗 Apertura app Android per pagamento...')
+      const success = await PaymentService.openPaymentApp(paymentData)
+      
+      if (success) {
+        // Reindirizza alla pagina di stato pagamento
+        console.log('✅ App Android aperta, reindirizzamento a payment-status')
+        router.push(`/payment-status?orderId=${orderId}`)
+      } else {
+        console.error('❌ Impossibile aprire l\'app Android')
+        alert(t('payment.appNotInstalled', currentLanguage))
+        setIsProcessing(false)
       }
 
-      localStorage.setItem("purchaseData", JSON.stringify(purchaseData))
-      router.push("/success")
     } catch (error) {
-      console.error('❌ Errore nella generazione dei ticket:', error)
-      alert(t('ticketGenerationError'))
+      console.error('❌ Errore nell\'avvio del pagamento:', error)
+      alert(t('payment.failed', currentLanguage))
       setIsProcessing(false)
     }
   }

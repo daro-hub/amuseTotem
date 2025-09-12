@@ -9,6 +9,7 @@ import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
 import QRCode from 'react-qr-code'
 import { generateMultipleTickets } from '@/lib/ticket-service'
+import { PaymentService } from '@/lib/payment-service'
 
 export default function ThankYou () {
   const [email, setEmail] = useState('')
@@ -22,53 +23,96 @@ export default function ThankYou () {
   const router = useRouter()
   const { currentLanguage } = useLanguage()
 
-  // Carica i dati dell'acquisto e genera i QR codes
+  // Carica i dati dell'acquisto e genera i QR codes dopo pagamento confermato
   useEffect(() => {
     const generateQRCodes = async () => {
       try {
-        // Carica i dati dell'acquisto
+        console.log('🎫 Avvio generazione QR codes per pagamento confermato...')
+        
+        // Prima prova a caricare i dati del pagamento completato
         const savedPurchaseData = localStorage.getItem('purchaseData')
-        const savedQuantity = localStorage.getItem('ticketQuantity')
-        const savedMuseumData = localStorage.getItem('museumData')
+        const tempPurchaseData = localStorage.getItem('tempPurchaseData')
         
-        if (savedQuantity) {
-          setQuantity(parseInt(savedQuantity))
-        }
+        let purchaseInfo = null
         
-        let museumData = null
-        if (savedMuseumData) {
-          museumData = JSON.parse(savedMuseumData)
-          setMuseumCode(museumData.code)
-          console.log('🏛️ Museum code caricato:', museumData.code)
-        }
-        
+        // Se abbiamo dati di un acquisto completato (vecchio flusso), usali
         if (savedPurchaseData) {
-          const data = JSON.parse(savedPurchaseData)
-          console.log('📦 Dati acquisto caricati:', data)
+          purchaseInfo = JSON.parse(savedPurchaseData)
+          console.log('📦 Usando dati acquisto completato (vecchio flusso):', purchaseInfo)
+          
+          if (purchaseInfo.qrCodes && purchaseInfo.qrCodes.length > 0) {
+            // I QR codes sono già stati generati
+            setQrCodes(purchaseInfo.qrCodes)
+            setQuantity(purchaseInfo.tickets)
+            setMuseumCode(purchaseInfo.museumCode)
+            setIsLoading(false)
+            return
+          }
         }
         
-        // Genera i QR codes reali tramite API
-        if (museumData?.code && savedQuantity) {
-          console.log('🔄 Generando QR codes reali tramite API...')
-          console.log('🔗 API URL: https://xejn-1dw8-r0nq.f2.xano.io/api:B_gGZXzt/totem/tickets')
-          console.log('📦 Payload: { museum_code: "' + museumData.code + '" }')
-          console.log('📊 Quantità biglietti: ' + savedQuantity)
+        // Se abbiamo dati temporanei di un pagamento SumUp, genera i ticket
+        if (tempPurchaseData) {
+          purchaseInfo = JSON.parse(tempPurchaseData)
+          console.log('💳 Usando dati pagamento SumUp completato:', purchaseInfo)
           
-          const generatedTickets = await generateMultipleTickets(parseInt(savedQuantity), museumData.code)
-          console.log('✅ Tickets generati con successo:', generatedTickets)
-          
-          // Estrai solo gli URL dei QR codes
-          const qrCodeUrls = generatedTickets.map(ticket => ticket.qrCode || '')
-          setQrCodes(qrCodeUrls)
-          
-          console.log('🔍 DEBUG - Array QR Codes URL estratti:')
-          console.log('  Lunghezza array:', qrCodeUrls.length)
-          qrCodeUrls.forEach((qr, index) => {
-            console.log(`  QR[${index}]: "${qr}"`)
-            console.log(`  QR[${index}] length: ${qr.length}`)
-            console.log(`  QR[${index}] type: ${typeof qr}`)
-          })
+          if (purchaseInfo.paymentPending) {
+            console.log('🔄 Pagamento SumUp confermato, generando tickets...')
+            
+            // Genera i ticket codes reali tramite API
+            const generatedTickets = await generateMultipleTickets(
+              purchaseInfo.tickets, 
+              purchaseInfo.museumCode
+            )
+            console.log('✅ Tickets generati con successo:', generatedTickets)
+            
+            // Estrai solo gli URL dei QR codes
+            const qrCodeUrls = generatedTickets.map(ticket => ticket.qrCode || '')
+            setQrCodes(qrCodeUrls)
+            setQuantity(purchaseInfo.tickets)
+            setMuseumCode(purchaseInfo.museumCode)
+            
+            // Salva i dati completi dell'acquisto
+            const completePurchaseData = {
+              ...purchaseInfo,
+              qrCodes: qrCodeUrls,
+              paymentPending: false,
+              paymentCompleted: true
+            }
+            localStorage.setItem('purchaseData', JSON.stringify(completePurchaseData))
+            localStorage.removeItem('tempPurchaseData')
+            
+            // Pulisci i dati del pagamento
+            PaymentService.clearPaymentData()
+            
+            console.log('🔍 DEBUG - Array QR Codes URL estratti:')
+            console.log('  Lunghezza array:', qrCodeUrls.length)
+            qrCodeUrls.forEach((qr, index) => {
+              console.log(`  QR[${index}]: "${qr}"`)
+            })
+          }
         }
+        
+        // Fallback: prova con i dati del museo e quantità salvati separatamente
+        if (!purchaseInfo) {
+          const savedQuantity = localStorage.getItem('ticketQuantity')
+          const savedMuseumData = localStorage.getItem('museumData')
+          
+          if (savedQuantity && savedMuseumData) {
+            const museumData = JSON.parse(savedMuseumData)
+            console.log('🔄 Fallback: generando QR codes con dati salvati separatamente...')
+            
+            const generatedTickets = await generateMultipleTickets(
+              parseInt(savedQuantity), 
+              museumData.code
+            )
+            
+            const qrCodeUrls = generatedTickets.map(ticket => ticket.qrCode || '')
+            setQrCodes(qrCodeUrls)
+            setQuantity(parseInt(savedQuantity))
+            setMuseumCode(museumData.code)
+          }
+        }
+        
       } catch (error) {
         console.error('❌ Errore nella generazione dei QR codes:', error)
       } finally {

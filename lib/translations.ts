@@ -282,6 +282,128 @@ export const translations: Translations = {
     th: 'การซื้อใหม่', vi: 'Mua Mới', he: 'רכישה חדשה', fa: 'خرید جدید', tl: 'Bagong Pagbili',
     ms: 'Pembelian Baru', sw: 'Ununuzi Mpya', cs: 'Nový Nákup', fi: 'Uusi Osto',
     no: 'Nytt Kjøp', hi: 'नई खरीदारी'
+  },
+
+  // Traduzioni per il sistema di pagamento SumUp
+  'payment.processing': {
+    it: 'Pagamento in corso...', en: 'Processing Payment...', es: 'Procesando Pago...', fr: 'Traitement du Paiement...', de: 'Zahlung wird verarbeitet...',
+    sv: 'Bearbetar Betalning...', pt: 'Processando Pagamento...', zh: '正在处理付款...', jp: '支払い処理中...', ko: '결제 처리 중...',
+    ar: 'معالجة الدفع...', pl: 'Przetwarzanie Płatności...', ru: 'Обработка Платежа...', sl: 'Obdelava Plačila...', hu: 'Fizetés Feldolgozása...',
+    sk: 'Spracovanie Platby...', uk: 'Обробка Платежу...', ro: 'Procesare Plată...', da: 'Behandler Betaling...', tr: 'Ödeme İşleniyor...',
+    el: 'Επεξεργασία Πληρωμής...', bn: 'পেমেন্ট প্রক্রিয়াকরণ...', nl: 'Betaling Verwerken...', sq: 'Duke Përpunuar Pagesën...', id: 'Memproses Pembayaran...',
+    th: 'กำลังประมวลผลการชำระเงิน...', vi: 'Đang Xử Lý Thanh Toán...', he: 'מעבד תשלום...', fa: 'در حال پردازش پرداخت...', tl: 'Pinoproseso ang Bayad...',
+    ms: 'Memproses Bayaran...', sw: 'Kuchakata Malipo...', cs: 'Zpracování Platby...', fi: 'Käsitellään Maksua...',
+    no: 'Behandler Betaling...', hi: 'भुगतान प्रसंस्करण...'
+  },
+
+  'payment.openingApp': {
+    it: 'Apertura app di pagamento...', en: 'Opening payment app...', es: 'Abriendo app de pago...', fr: 'Ouverture de l\'app de paiement...', de: 'Zahlungs-App wird geöffnet...',
+    sv: 'Öppnar betalningsapp...', pt: 'Abrindo app de pagamento...', zh: '正在打开支付应用...', jp: '決済アプリを開いています...', ko: '결제 앱을 여는 중...',
+    ar: 'فتح تطبيق الدفع...', pl: 'Otwieranie aplikacji płatności...', ru: 'Открытие приложения оплаты...', sl: 'Odpiranje aplikacije za plačilo...', hu: 'Fizetési alkalmazás megnyitása...',
+    sk: 'Otvorenie platobnej aplikácie...', uk: 'Відкриття додатку оплати...', ro: 'Deschidere aplicație plată...', da: 'Åbner betalingsapp...', tr: 'Ödeme uygulaması açılıyor...',
+    el: 'Άνοιγμα εφαρμογής πληρωμής...', bn: 'পেমেন্ট অ্যাপ খোলা হচ্ছে...', nl: 'Betalingsapp openen...', sq: 'Duke hapur aplikacionin e pagesës...', id: 'Membuka aplikasi pembayaran...',
+    th: 'กำลังเปิดแอปชำระเงิน...', vi: 'Đang mở ứng dụng thanh toán...', he: 'פותח אפליקציית תשלום...', fa: 'در حال باز کردن اپ پرداخت...', tl: 'Binubuksan ang payment app...',
+    ms: 'Membuka aplikasi bayaran...', sw: 'Kufungua app ya malipo...', cs: 'Otevírání platební aplikace...', fi: 'Avataan maksuapplia...',
+    no: 'Åpner betalingsapp...', hi: 'भुगतान ऐप खोला जा रहा है...'
+  },
+
+  'payment.waitingForPayment': {
+    it: 'In attesa del pagamento...', en: 'Waiting for payment...', es: 'Esperando el pago...', fr: 'En attente du paiement...', de: 'Warten auf Zahlung...',
+    sv: 'Väntar på betalning...', pt: 'Aguardando pagamento...', zh: '等待付款...', jp: '支払いを待っています...', ko: '결제를 기다리는 중...',
+    ar: 'في انتظار الدفع...', pl: 'Oczekiwanie na płatność...', ru: 'Ожидание платежа...', sl: 'Čakanje na plačilo...', hu: 'Fizetésre várva...',
+    sk: 'Čakanie na platbu...', uk: 'Очікування платежу...', ro: 'Așteptare plată...', da: 'Venter på betaling...', tr: 'Ödeme bekleniyor...',
+    el: 'Αναμονή πληρωμής...', bn: 'পেমেন্টের জন্য অপেক্ষা...', nl: 'Wachten op betaling...', sq: 'Duke pritur pagesën...', id: 'Menunggu pembayaran...',
+    th: 'รอการชำระเงิน...', vi: 'Đang chờ thanh toán...', he: 'ממתין לתשלום...', fa: 'در انتظار پرداخت...', tl: 'Naghihintay ng bayad...',
+    ms: 'Menunggu bayaran...', sw: 'Kusubiri malipo...', cs: 'Čekání na platbu...', fi: 'Odotetaan maksua...',
+    no: 'Venter på betaling...', hi: 'भुगतान की प्रतीक्षा...'
+  },
+
+  'payment.successful': {
+    it: 'Pagamento riuscito!', en: 'Payment successful!', es: '¡Pago exitoso!', fr: 'Paiement réussi !', de: 'Zahlung erfolgreich!',
+    sv: 'Betalning lyckades!', pt: 'Pagamento bem-sucedido!', zh: '付款成功！', jp: '支払い成功！', ko: '결제 성공!',
+    ar: 'تم الدفع بنجاح!', pl: 'Płatność udana!', ru: 'Платеж успешен!', sl: 'Plačilo uspešno!', hu: 'Fizetés sikeres!',
+    sk: 'Platba úspešná!', uk: 'Платіж успішний!', ro: 'Plată reușită!', da: 'Betaling lykkedes!', tr: 'Ödeme başarılı!',
+    el: 'Επιτυχής πληρωμή!', bn: 'পেমেন্ট সফল!', nl: 'Betaling geslaagd!', sq: 'Pagesa me sukses!', id: 'Pembayaran berhasil!',
+    th: 'ชำระเงินสำเร็จ!', vi: 'Thanh toán thành công!', he: 'תשלום הצליח!', fa: 'پرداخت موفق!', tl: 'Matagumpay na bayad!',
+    ms: 'Bayaran berjaya!', sw: 'Malipo yamefanikiwa!', cs: 'Platba úspěšná!', fi: 'Maksu onnistui!',
+    no: 'Betaling vellykket!', hi: 'भुगतान सफल!'
+  },
+
+  'payment.failed': {
+    it: 'Pagamento fallito', en: 'Payment failed', es: 'Pago fallido', fr: 'Paiement échoué', de: 'Zahlung fehlgeschlagen',
+    sv: 'Betalning misslyckades', pt: 'Pagamento falhado', zh: '付款失败', jp: '支払い失敗', ko: '결제 실패',
+    ar: 'فشل الدفع', pl: 'Płatność nieudana', ru: 'Платеж не удался', sl: 'Plačilo neuspešno', hu: 'Fizetés sikertelen',
+    sk: 'Platba neúspešná', uk: 'Платіж не вдався', ro: 'Plată eșuată', da: 'Betaling mislykkedes', tr: 'Ödeme başarısız',
+    el: 'Αποτυχία πληρωμής', bn: 'পেমেন্ট ব্যর্থ', nl: 'Betaling mislukt', sq: 'Pagesa dështoi', id: 'Pembayaran gagal',
+    th: 'ชำระเงินล้มเหลว', vi: 'Thanh toán thất bại', he: 'תשלום נכשל', fa: 'پرداخت ناموفق', tl: 'Nabigo ang bayad',
+    ms: 'Bayaran gagal', sw: 'Malipo yameshindwa', cs: 'Platba neúspěšná', fi: 'Maksu epäonnistui',
+    no: 'Betaling mislyktes', hi: 'भुगतान विफल'
+  },
+
+  'payment.cancelled': {
+    it: 'Pagamento annullato', en: 'Payment cancelled', es: 'Pago cancelado', fr: 'Paiement annulé', de: 'Zahlung abgebrochen',
+    sv: 'Betalning avbruten', pt: 'Pagamento cancelado', zh: '付款已取消', jp: '支払いキャンセル', ko: '결제 취소됨',
+    ar: 'تم إلغاء الدفع', pl: 'Płatność anulowana', ru: 'Платеж отменен', sl: 'Plačilo preklicano', hu: 'Fizetés megszakítva',
+    sk: 'Platba zrušená', uk: 'Платіж скасовано', ro: 'Plată anulată', da: 'Betaling annulleret', tr: 'Ödeme iptal edildi',
+    el: 'Πληρωμή ακυρώθηκε', bn: 'পেমেন্ট বাতিল', nl: 'Betaling geannuleerd', sq: 'Pagesa u anulua', id: 'Pembayaran dibatalkan',
+    th: 'ชำระเงินถูกยกเลิก', vi: 'Thanh toán đã hủy', he: 'תשלום בוטל', fa: 'پرداخت لغو شد', tl: 'Nakansela ang bayad',
+    ms: 'Bayaran dibatalkan', sw: 'Malipo yameghairiwa', cs: 'Platba zrušena', fi: 'Maksu peruutettu',
+    no: 'Betaling avbrutt', hi: 'भुगतान रद्द'
+  },
+
+  'payment.timeout': {
+    it: 'Timeout del pagamento', en: 'Payment timeout', es: 'Tiempo de pago agotado', fr: 'Délai de paiement dépassé', de: 'Zahlungs-Timeout',
+    sv: 'Betalning timeout', pt: 'Timeout do pagamento', zh: '付款超时', jp: '支払いタイムアウト', ko: '결제 시간 초과',
+    ar: 'انتهت مهلة الدفع', pl: 'Przekroczenie czasu płatności', ru: 'Тайм-аут платежа', sl: 'Časovna omejitev plačila', hu: 'Fizetési időtúllépés',
+    sk: 'Časový limit platby', uk: 'Тайм-аут платежу', ro: 'Timeout plată', da: 'Betaling timeout', tr: 'Ödeme zaman aşımı',
+    el: 'Λήξη χρόνου πληρωμής', bn: 'পেমেন্ট টাইমআউট', nl: 'Betaling timeout', sq: 'Koha e pagesës mbaroi', id: 'Timeout pembayaran',
+    th: 'หมดเวลาชำระเงิน', vi: 'Hết thời gian thanh toán', he: 'פג זמן תשלום', fa: 'زمان پرداخت تمام شد', tl: 'Naubos ang oras ng bayad',
+    ms: 'Masa tamat bayaran', sw: 'Muda wa malipo umekwisha', cs: 'Časový limit platby', fi: 'Maksun aikakatkaisu',
+    no: 'Betaling timeout', hi: 'भुगतान समय समाप्त'
+  },
+
+  'payment.retry': {
+    it: 'Riprova Pagamento', en: 'Retry Payment', es: 'Reintentar Pago', fr: 'Réessayer le Paiement', de: 'Zahlung Wiederholen',
+    sv: 'Försök Betalning Igen', pt: 'Tentar Pagamento Novamente', zh: '重试付款', jp: '支払いを再試行', ko: '결제 재시도',
+    ar: 'إعادة محاولة الدفع', pl: 'Ponów Płatność', ru: 'Повторить Платеж', sl: 'Ponovi Plačilo', hu: 'Fizetés Újrapróbálása',
+    sk: 'Zopakovať Platbu', uk: 'Повторити Платіж', ro: 'Reîncercare Plată', da: 'Prøv Betaling Igen', tr: 'Ödemeyi Yeniden Dene',
+    el: 'Επανάληψη Πληρωμής', bn: 'পেমেন্ট পুনরায় চেষ্টা', nl: 'Betaling Opnieuw Proberen', sq: 'Riprovo Pagesën', id: 'Coba Lagi Pembayaran',
+    th: 'ลองชำระเงินอีกครั้ง', vi: 'Thử Lại Thanh Toán', he: 'נסה שוב תשלום', fa: 'تلاش مجدد پرداخت', tl: 'Subukan Muli ang Bayad',
+    ms: 'Cuba Bayaran Semula', sw: 'Jaribu Malipo Tena', cs: 'Zkusit Platbu Znovu', fi: 'Yritä Maksua Uudelleen',
+    no: 'Prøv Betaling Igjen', hi: 'भुगतान पुनः प्रयास'
+  },
+
+  'payment.appNotInstalled': {
+    it: 'App di pagamento non installata', en: 'Payment app not installed', es: 'App de pago no instalada', fr: 'App de paiement non installée', de: 'Zahlungs-App nicht installiert',
+    sv: 'Betalningsapp inte installerad', pt: 'App de pagamento não instalado', zh: '支付应用未安装', jp: '決済アプリがインストールされていません', ko: '결제 앱이 설치되지 않음',
+    ar: 'تطبيق الدفع غير مثبت', pl: 'Aplikacja płatności nie jest zainstalowana', ru: 'Приложение оплаты не установлено', sl: 'Aplikacija za plačilo ni nameščena', hu: 'Fizetési alkalmazás nincs telepítve',
+    sk: 'Platobná aplikácia nie je nainštalovaná', uk: 'Додаток оплати не встановлено', ro: 'Aplicația de plată nu este instalată', da: 'Betalingsapp ikke installeret', tr: 'Ödeme uygulaması yüklü değil',
+    el: 'Εφαρμογή πληρωμής δεν είναι εγκατεστημένη', bn: 'পেমেন্ট অ্যাপ ইনস্টল নেই', nl: 'Betalingsapp niet geïnstalleerd', sq: 'Aplikacioni i pagesës nuk është i instaluar', id: 'Aplikasi pembayaran tidak terinstal',
+    th: 'แอปชำระเงินไม่ได้ติดตั้ง', vi: 'Ứng dụng thanh toán chưa cài đặt', he: 'אפליקציית תשלום לא מותקנת', fa: 'اپ پرداخت نصب نیست', tl: 'Payment app hindi naka-install',
+    ms: 'Aplikasi bayaran tidak dipasang', sw: 'App ya malipo haijasanikishwa', cs: 'Platební aplikace není nainstalována', fi: 'Maksuapplia ei ole asennettu',
+    no: 'Betalingsapp ikke installert', hi: 'भुगतान ऐप इंस्टॉल नहीं है'
+  },
+
+  'payment.downloadApp': {
+    it: 'Scarica App', en: 'Download App', es: 'Descargar App', fr: 'Télécharger l\'App', de: 'App Herunterladen',
+    sv: 'Ladda Ner App', pt: 'Baixar App', zh: '下载应用', jp: 'アプリをダウンロード', ko: '앱 다운로드',
+    ar: 'تحميل التطبيق', pl: 'Pobierz Aplikację', ru: 'Скачать Приложение', sl: 'Prenesi Aplikacijo', hu: 'Alkalmazás Letöltése',
+    sk: 'Stiahnuť Aplikáciu', uk: 'Завантажити Додаток', ro: 'Descarcă Aplicația', da: 'Download App', tr: 'Uygulamayı İndir',
+    el: 'Κατέβασε την Εφαρμογή', bn: 'অ্যাপ ডাউনলোড করুন', nl: 'App Downloaden', sq: 'Shkarko Aplikacionin', id: 'Unduh Aplikasi',
+    th: 'ดาวน์โหลดแอป', vi: 'Tải Ứng Dụng', he: 'הורד אפליקציה', fa: 'دانلود اپ', tl: 'I-download ang App',
+    ms: 'Muat Turun Aplikasi', sw: 'Pakua App', cs: 'Stáhnout Aplikaci', fi: 'Lataa Sovellus',
+    no: 'Last Ned App', hi: 'ऐप डाउनलोड करें'
+  },
+
+  'payment.instructions': {
+    it: 'Completa il pagamento con l\'app esterna e torna qui per i tuoi biglietti', en: 'Complete payment with external app and return here for your tickets', es: 'Completa el pago con la app externa y regresa aquí por tus boletos', fr: 'Complétez le paiement avec l\'app externe et revenez ici pour vos billets', de: 'Schließen Sie die Zahlung mit der externen App ab und kehren Sie für Ihre Tickets hierher zurück',
+    sv: 'Slutför betalningen med den externa appen och återvänd hit för dina biljetter', pt: 'Complete o pagamento com o app externo e volte aqui para seus ingressos', zh: '使用外部应用完成付款，然后返回此处获取您的门票', jp: '外部アプリで支払いを完了し、チケットを受け取るためにここに戻ってください', ko: '외부 앱으로 결제를 완료하고 티켓을 받으러 여기로 돌아오세요',
+    ar: 'أكمل الدفع باستخدام التطبيق الخارجي وعد هنا للحصول على تذاكرك', pl: 'Dokończ płatność za pomocą zewnętrznej aplikacji i wróć tutaj po swoje bilety', ru: 'Завершите платеж с помощью внешнего приложения и вернитесь сюда за билетами', sl: 'Dokončajte plačilo z zunanjo aplikacijo in se vrnite sem po svoje vstopnice', hu: 'Fejezze be a fizetést a külső alkalmazással, és térjen vissza ide a jegyeiért',
+    sk: 'Dokončite platbu s externou aplikáciou a vráťte sa sem pre svoje lístky', uk: 'Завершіть платіж за допомогою зовнішнього додатку та поверніться сюди за квитками', ro: 'Finalizați plata cu aplicația externă și reveniți aici pentru biletele dvs.', da: 'Fuldfør betalingen med den eksterne app og vend tilbage her for dine billetter', tr: 'Harici uygulamayla ödemeyi tamamlayın ve biletleriniz için buraya geri dönün',
+    el: 'Ολοκληρώστε την πληρωμή με την εξωτερική εφαρμογή και επιστρέψτε εδώ για τα εισιτήριά σας', bn: 'বাহ্যিক অ্যাপ দিয়ে পেমেন্ট সম্পূর্ণ করুন এবং আপনার টিকিটের জন্য এখানে ফিরে আসুন', nl: 'Voltooi de betaling met de externe app en kom terug hier voor je tickets', sq: 'Përfundoni pagesën me aplikacionin e jashtëm dhe kthehuni këtu për biletat tuaja', id: 'Selesaikan pembayaran dengan aplikasi eksternal dan kembali ke sini untuk tiket Anda',
+    th: 'ชำระเงินด้วยแอปภายนอกและกลับมาที่นี่สำหรับตั๋วของคุณ', vi: 'Hoàn thành thanh toán với ứng dụng bên ngoài và quay lại đây để lấy vé của bạn', he: 'השלם את התשלום עם האפליקציה החיצונית וחזור לכאן לכרטיסים שלך', fa: 'پرداخت را با اپ خارجی تکمیل کنید و برای بلیت‌هایتان اینجا برگردید', tl: 'Kumpletuhin ang bayad sa panlabas na app at bumalik dito para sa inyong mga tiket',
+    ms: 'Lengkapkan bayaran dengan aplikasi luaran dan kembali ke sini untuk tiket anda', sw: 'Maliza malipo kwa kutumia programu ya nje na urudi hapa kwa tiketi zako', cs: 'Dokončete platbu s externí aplikací a vraťte se sem pro své vstupenky', fi: 'Viimeistele maksu ulkoisella sovelluksella ja palaa tänne lippujasi varten',
+    no: 'Fullfør betalingen med den eksterne appen og kom tilbake her for billettene dine', hi: 'बाहरी ऐप से भुगतान पूरा करें और अपने टिकट के लिए यहां वापस आएं'
   }
 }
 
