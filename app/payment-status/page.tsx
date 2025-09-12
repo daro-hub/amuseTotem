@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
@@ -9,7 +9,8 @@ import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
 import { PaymentService, PaymentStatus } from '@/lib/payment-service'
 
-export default function PaymentStatusPage() {
+// Componente per gestire il contenuto della pagina
+function PaymentStatusContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { currentLanguage } = useLanguage()
@@ -283,5 +284,48 @@ export default function PaymentStatusPage() {
         </Button>
       </div>
     </div>
+  )
+}
+
+// Componente di loading per Suspense
+function PaymentStatusLoading() {
+  const { currentLanguage } = useLanguage()
+  
+  return (
+    <div className="min-h-screen bg-black flex flex-col items-center p-6">
+      {/* Logo */}
+      <div className="pt-0 pb-0">
+        <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
+      </div>
+
+      {/* Contenuto di caricamento */}
+      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container} mt-8`}>
+        <div className="text-center space-y-6">
+          <div className="text-8xl">⏳</div>
+          <h2 className="text-white text-5xl font-bold text-center">
+            {t('payment.processing', currentLanguage)}
+          </h2>
+          <p className="text-white text-2xl font-light text-center">
+            Caricamento stato pagamento...
+          </p>
+        </div>
+
+        {/* Animazione di caricamento */}
+        <div className="flex items-center space-x-2">
+          <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+          <div className="w-3 h-3 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+          <div className="w-3 h-3 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Componente principale con Suspense
+export default function PaymentStatusPage() {
+  return (
+    <Suspense fallback={<PaymentStatusLoading />}>
+      <PaymentStatusContent />
+    </Suspense>
   )
 }
