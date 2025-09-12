@@ -58,6 +58,29 @@ export default function ThankYou () {
           if (purchaseInfo.paymentPending) {
             console.log('🔄 Pagamento SumUp confermato, generando tickets...')
             
+            // VERIFICA CRITICA: Controlla che il pagamento sia stato effettivamente confermato
+            // Controlla se c'è un ordine con status SUCCESSFUL nel backend
+            try {
+              const orderStatus = await PaymentService.checkPaymentStatus(purchaseInfo.orderId)
+              console.log('🔍 Verifica stato pagamento:', orderStatus)
+              
+              if (orderStatus.status !== 'SUCCESSFUL') {
+                console.error('❌ Pagamento non confermato, status:', orderStatus.status)
+                setQrCodes([])
+                setQuantity(0)
+                setIsLoading(false)
+                return
+              }
+              
+              console.log('✅ Pagamento confermato, procedo con generazione ticket')
+            } catch (error) {
+              console.error('❌ Errore nella verifica del pagamento:', error)
+              setQrCodes([])
+              setQuantity(0)
+              setIsLoading(false)
+              return
+            }
+            
             // Genera i ticket codes reali tramite API
             const generatedTickets = await generateMultipleTickets(
               purchaseInfo.tickets, 
@@ -89,28 +112,20 @@ export default function ThankYou () {
             qrCodeUrls.forEach((qr, index) => {
               console.log(`  QR[${index}]: "${qr}"`)
             })
+          } else {
+            console.log('❌ Pagamento non in stato PENDING, non genero ticket')
+            setQrCodes([])
+            setQuantity(0)
           }
         }
         
-        // Fallback: prova con i dati del museo e quantità salvati separatamente
+        // NON generare ticket se non c'è un pagamento confermato
         if (!purchaseInfo) {
-          const savedQuantity = localStorage.getItem('ticketQuantity')
-          const savedMuseumData = localStorage.getItem('museumData')
-          
-          if (savedQuantity && savedMuseumData) {
-            const museumData = JSON.parse(savedMuseumData)
-            console.log('🔄 Fallback: generando QR codes con dati salvati separatamente...')
-            
-            const generatedTickets = await generateMultipleTickets(
-              parseInt(savedQuantity), 
-              museumData.code
-            )
-            
-            const qrCodeUrls = generatedTickets.map(ticket => ticket.qrCode || '')
-            setQrCodes(qrCodeUrls)
-            setQuantity(parseInt(savedQuantity))
-            setMuseumCode(museumData.code)
-          }
+          console.log('❌ Nessun pagamento confermato trovato, non genero ticket')
+          setQrCodes([])
+          setQuantity(0)
+          setIsLoading(false)
+          return
         }
         
       } catch (error) {
@@ -241,8 +256,37 @@ export default function ThankYou () {
         </p>
 
 
-        {/* QR Code Carousel - Effetto profondità */}
-        {!isLoading && qrCodes.length > 0 ? (
+        {/* Messaggio se nessun pagamento confermato */}
+        {!isLoading && qrCodes.length === 0 ? (
+          <div className="w-full flex flex-col items-center space-y-6">
+            <div className="text-center space-y-4">
+              <div className="text-8xl">❌</div>
+              <h3 className="text-red-400 text-4xl font-bold">
+                Pagamento Non Confermato
+              </h3>
+              <p className="text-red-300 text-xl max-w-md">
+                Non è stato possibile confermare il pagamento. I ticket non sono stati generati.
+              </p>
+            </div>
+            
+            <div className="flex flex-col space-y-4 w-full max-w-md">
+              <Button
+                onClick={() => router.push('/')}
+                className="w-full h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xl font-medium"
+              >
+                Torna alla Home
+              </Button>
+              
+              <Button
+                onClick={() => router.back()}
+                variant="outline"
+                className="w-full h-16 border-2 border-white text-white hover:bg-white/10 rounded-lg text-xl font-light"
+              >
+                Riprova Pagamento
+              </Button>
+            </div>
+          </div>
+        ) : !isLoading && qrCodes.length > 0 ? (
           <div className="w-full flex flex-col items-center space-y-2">
             {/* Container carosello */}
             <div className="relative w-full h-[28rem] flex items-center justify-center">
