@@ -71,14 +71,88 @@ export class PaymentService {
 
       // Prova ad aprire il deep link
       if (typeof window !== 'undefined') {
-        window.location.href = deepLink
-        return true
+        // Prova a rilevare se l'app è installata
+        const isAppInstalled = await this.detectAppInstallation(deepLink)
+        
+        if (isAppInstalled) {
+          window.location.href = deepLink
+          return true
+        } else {
+          console.warn('⚠️ App Android non rilevata, ma procedo comunque con il deep link')
+          window.location.href = deepLink
+          return true // Procedi comunque per permettere il test
+        }
       }
 
       return false
     } catch (error) {
       console.error('❌ Errore nell\'aprire l\'app di pagamento:', error)
       return false
+    }
+  }
+
+  /**
+   * Rileva se l'app Android è installata (migliorata)
+   */
+  private static async detectAppInstallation(deepLink: string): Promise<boolean> {
+    try {
+      // Verifica se siamo su Android
+      const isAndroid = /Android/i.test(navigator.userAgent)
+      if (!isAndroid) {
+        console.log('📱 Non su Android, assumo app non installata')
+        return false
+      }
+
+      // Prova a rilevare se l'app risponde al deep link
+      // Questo è un approccio euristico
+      return new Promise((resolve) => {
+        let resolved = false
+        
+        // Timeout per la detection
+        const timeout = setTimeout(() => {
+          if (!resolved) {
+            resolved = true
+            console.log('⏰ Timeout detection app, assumo installata')
+            resolve(true) // Assume installata per permettere il test
+          }
+        }, 1000)
+
+        // Prova a creare un iframe nascosto per testare il deep link
+        const iframe = document.createElement('iframe')
+        iframe.style.display = 'none'
+        iframe.src = deepLink
+        
+        iframe.onload = () => {
+          if (!resolved) {
+            resolved = true
+            clearTimeout(timeout)
+            console.log('✅ App rilevata tramite iframe')
+            resolve(true)
+          }
+        }
+        
+        iframe.onerror = () => {
+          if (!resolved) {
+            resolved = true
+            clearTimeout(timeout)
+            console.log('❌ App non rilevata tramite iframe')
+            resolve(false)
+          }
+        }
+        
+        document.body.appendChild(iframe)
+        
+        // Cleanup
+        setTimeout(() => {
+          if (iframe.parentNode) {
+            iframe.parentNode.removeChild(iframe)
+          }
+        }, 2000)
+      })
+      
+    } catch (error) {
+      console.error('❌ Errore nella detection app:', error)
+      return true // In caso di errore, procedi comunque
     }
   }
 
