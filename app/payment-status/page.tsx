@@ -47,13 +47,15 @@ function PaymentStatusContent() {
               setIsPolling(false)
               // Redirect alla thank you page dopo 2 secondi
               setTimeout(() => {
-                router.push('/thankyou')
+                router.push('/thank-you')
               }, 2000)
             } else if (status.status === 'FAILED' || status.status === 'CANCELLED') {
               setIsPolling(false)
+              // NON fare redirect, rimani nella pagina per mostrare errore
             } else if (status.status === 'TIMEOUT') {
               setIsPolling(false)
               setTimeoutWarning(true)
+              // NON fare redirect automatico, rimani nella pagina
             }
           },
           5 * 60 * 1000 // 5 minuti timeout
@@ -61,6 +63,18 @@ function PaymentStatusContent() {
 
         const finalStatus = await pollPromise
         console.log('✅ Polling completato con stato finale:', finalStatus)
+        
+        // Se il polling è completato ma non abbiamo ricevuto callback dall'app,
+        // significa che l'app non è installata o non funziona
+        if (finalStatus.status === 'PENDING') {
+          console.log('⚠️ Polling completato senza callback dall\'app - assumo app non installata')
+          setPaymentStatus({
+            orderId,
+            status: 'FAILED',
+            error: 'App di pagamento non installata o non funzionante'
+          })
+          setIsPolling(false)
+        }
         
       } catch (error) {
         console.error('❌ Errore durante il polling:', error)
@@ -168,6 +182,9 @@ function PaymentStatusContent() {
       case 'SUCCESSFUL':
         return t('payment.successful', currentLanguage)
       case 'FAILED':
+        if (paymentStatus.error?.includes('non installata')) {
+          return t('payment.appNotInstalled', currentLanguage)
+        }
         return t('payment.failed', currentLanguage)
       case 'CANCELLED':
         return t('payment.cancelled', currentLanguage)
