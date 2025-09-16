@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import NavigationBar from "@/components/NavigationBar"
 import { Mail, Minus, Plus, CreditCard, Shield } from "lucide-react"
-import { generateMultipleTickets } from "@/lib/ticket-service"
 import { PaymentService, PaymentData } from "@/lib/payment-service"
 import { useMuseum } from "@/contexts/MuseumContext"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -149,18 +148,24 @@ export default function Purchase() {
   const totalPrice = (itinerary.price || 15) * tickets
 
   const handlePurchase = async () => {
+    console.log('🎯 PULSANTE PAGA PREMUTO - Inizio processo pagamento')
+    
     if (!email || !email.includes("@")) {
+      console.log('❌ Email non valida:', email)
       alert(t('enterValidEmail', currentLanguage))
       return
     }
 
+    console.log('✅ Email valida, avvio processo pagamento')
     setIsProcessing(true)
 
     try {
       // Ottieni il codice del museo dal context
       const museumCode = museumData?.code
+      console.log('🏛️ Codice museo dal context:', museumCode)
       
       if (!museumCode) {
+        console.error('❌ Codice museo non trovato nel context')
         alert(t('museumCodeNotFound', currentLanguage))
         setIsProcessing(false)
         return
@@ -168,12 +173,12 @@ export default function Purchase() {
 
       // Genera un orderId univoco per il pagamento
       const orderId = PaymentService.generateOrderId()
-      console.log('💳 Generato orderId per pagamento SumUp:', orderId)
+      console.log('💳 Generato orderId per pagamento:', orderId)
 
-      // Prepara i dati del pagamento per SumUp
+      // Prepara i dati del pagamento
       const paymentData: PaymentData = {
         orderId,
-        amount: PaymentService.formatAmount(totalPrice),
+        amount: totalPrice,
         currency: 'EUR',
         museumCode,
         tickets,
@@ -181,6 +186,9 @@ export default function Purchase() {
       }
 
       console.log('💳 Dati pagamento preparati:', paymentData)
+      console.log('📊 Importo totale:', totalPrice, 'EUR')
+      console.log('🎫 Numero biglietti:', tickets)
+      console.log('📧 Email cliente:', email)
 
       // Salva i dati dell'itinerario e dell'acquisto temporaneamente
       const tempPurchaseData = {
@@ -193,18 +201,22 @@ export default function Purchase() {
         paymentPending: true
       }
       localStorage.setItem("tempPurchaseData", JSON.stringify(tempPurchaseData))
+      console.log('💾 Dati acquisto salvati in localStorage')
 
-      // Apri l'app Android per il pagamento SumUp
-      console.log('🔗 Apertura app Android per pagamento...')
-      const success = await PaymentService.openPaymentApp(paymentData)
+      // Processa il pagamento (simulato)
+      console.log('🔗 Processamento pagamento...')
+      const success = await PaymentService.processPayment(paymentData)
       
       if (success) {
-        // Reindirizza alla pagina di stato pagamento
-        console.log('✅ App Android aperta, reindirizzamento a payment-status')
-        router.push(`/payment-status?orderId=${orderId}`)
+        console.log('✅ Pagamento processato con successo')
+        
+        // Reindirizza direttamente alla pagina di ringraziamento
+        // I biglietti verranno generati lì
+        console.log('🔄 Reindirizzamento a thank-you')
+        router.push('/thank-you')
       } else {
-        console.error('❌ Impossibile aprire l\'app Android')
-        alert(t('payment.appNotInstalled', currentLanguage))
+        console.error('❌ Errore nel processamento del pagamento')
+        alert(t('payment.failed', currentLanguage))
         setIsProcessing(false)
       }
 

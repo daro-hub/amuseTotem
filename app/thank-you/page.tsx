@@ -9,7 +9,6 @@ import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
 import QRCode from 'react-qr-code'
 import { generateMultipleTickets } from '@/lib/ticket-service'
-import { PaymentService } from '@/lib/payment-service'
 
 export default function ThankYou () {
   const [email, setEmail] = useState('')
@@ -23,119 +22,92 @@ export default function ThankYou () {
   const router = useRouter()
   const { currentLanguage } = useLanguage()
 
-  // Carica i dati dell'acquisto e genera i QR codes dopo pagamento confermato
+  // Genera i biglietti direttamente nella thank you page
   useEffect(() => {
-    const generateQRCodes = async () => {
+    const generateTicketsDirectly = async () => {
       try {
-        console.log('🎫 Avvio generazione QR codes per pagamento confermato...')
+        console.log('🎫 Generazione biglietti direttamente nella thank you page...')
         
-        // Prima prova a caricare i dati del pagamento completato
-        const savedPurchaseData = localStorage.getItem('purchaseData')
-        const tempPurchaseData = localStorage.getItem('tempPurchaseData')
-        
-        let purchaseInfo = null
-        
-        // Se abbiamo dati di un acquisto completato (vecchio flusso), usali
-        if (savedPurchaseData) {
-          purchaseInfo = JSON.parse(savedPurchaseData)
-          console.log('📦 Usando dati acquisto completato (vecchio flusso):', purchaseInfo)
-          
-          if (purchaseInfo.qrCodes && purchaseInfo.qrCodes.length > 0) {
-            // I QR codes sono già stati generati
-            setQrCodes(purchaseInfo.qrCodes)
-            setQuantity(purchaseInfo.tickets)
-            setMuseumCode(purchaseInfo.museumCode)
-            setIsLoading(false)
-            return
-          }
-        }
-        
-        // Se abbiamo dati temporanei di un pagamento SumUp, genera i ticket
-        if (tempPurchaseData) {
-          purchaseInfo = JSON.parse(tempPurchaseData)
-          console.log('💳 Usando dati pagamento SumUp completato:', purchaseInfo)
-          
-          if (purchaseInfo.paymentPending) {
-            console.log('🔄 Pagamento SumUp confermato, generando tickets...')
-            
-            // VERIFICA CRITICA: Controlla che il pagamento sia stato effettivamente confermato
-            // Controlla se c'è un ordine con status SUCCESSFUL nel backend
-            try {
-              const orderStatus = await PaymentService.checkPaymentStatus(purchaseInfo.orderId)
-              console.log('🔍 Verifica stato pagamento:', orderStatus)
-              
-              if (orderStatus.status !== 'SUCCESSFUL') {
-                console.error('❌ Pagamento non confermato, status:', orderStatus.status)
-                setQrCodes([])
-                setQuantity(0)
-                setIsLoading(false)
-                return
-              }
-              
-              console.log('✅ Pagamento confermato, procedo con generazione ticket')
-            } catch (error) {
-              console.error('❌ Errore nella verifica del pagamento:', error)
-              setQrCodes([])
-              setQuantity(0)
-              setIsLoading(false)
-              return
-            }
-            
-            // Genera i ticket codes reali tramite API
-            const generatedTickets = await generateMultipleTickets(
-              purchaseInfo.tickets, 
-              purchaseInfo.museumCode
-            )
-            console.log('✅ Tickets generati con successo:', generatedTickets)
-            
-            // Estrai solo gli URL dei QR codes
-            const qrCodeUrls = generatedTickets.map(ticket => ticket.qrCode || '')
-            setQrCodes(qrCodeUrls)
-            setQuantity(purchaseInfo.tickets)
-            setMuseumCode(purchaseInfo.museumCode)
-            
-            // Salva i dati completi dell'acquisto
-            const completePurchaseData = {
-              ...purchaseInfo,
-              qrCodes: qrCodeUrls,
-              paymentPending: false,
-              paymentCompleted: true
-            }
-            localStorage.setItem('purchaseData', JSON.stringify(completePurchaseData))
-            localStorage.removeItem('tempPurchaseData')
-            
-            // Pulisci i dati del pagamento
-            PaymentService.clearPaymentData()
-            
-            console.log('🔍 DEBUG - Array QR Codes URL estratti:')
-            console.log('  Lunghezza array:', qrCodeUrls.length)
-            qrCodeUrls.forEach((qr, index) => {
-              console.log(`  QR[${index}]: "${qr}"`)
-            })
-          } else {
-            console.log('❌ Pagamento non in stato PENDING, non genero ticket')
-            setQrCodes([])
-            setQuantity(0)
-          }
-        }
-        
-        // NON generare ticket se non c'è un pagamento confermato
-        if (!purchaseInfo) {
-          console.log('❌ Nessun pagamento confermato trovato, non genero ticket')
+        // Carica il codice del museo dal localStorage
+        const museumData = localStorage.getItem('museumData')
+        if (!museumData) {
+          console.log('❌ Nessun dato museo trovato nel localStorage')
           setQrCodes([])
           setQuantity(0)
           setIsLoading(false)
           return
         }
         
+        const museum = JSON.parse(museumData)
+        const museumCode = museum.code
+        console.log('🏛️ Codice museo dal localStorage:', museumCode)
+        
+        // Carica il numero di biglietti dal localStorage
+        const ticketQuantity = localStorage.getItem('ticketQuantity')
+        const ticketCount = ticketQuantity ? parseInt(ticketQuantity) : 2
+        console.log('🎫 Numero biglietti dal localStorage:', ticketCount)
+        
+        console.log('🎫 Generando', ticketCount, 'biglietti per museo', museumCode)
+        
+        // Genera i QR codes per ogni biglietto
+        const qrCodeUrls = []
+        for (let i = 0; i < ticketCount; i++) {
+          console.log(`🎫 Generando biglietto ${i + 1}/${ticketCount}`)
+          
+          try {
+            // Chiama l'API per generare il ticket code
+            const apiUrl = 'https://xejn-1dw8-r0nq.f2.xano.io/api:B_gGZXzt/totem/tickets'
+            const payload = { museum_code: museumCode }
+            
+            console.log('🔗 Chiamata API:', apiUrl, payload)
+            
+            const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(payload)
+            })
+            
+            if (!response.ok) {
+              throw new Error(`API Error: ${response.status}`)
+            }
+            
+            const data = await response.json()
+            console.log('📊 Risposta API:', data)
+            
+            const ticketCode = data.ticket_code
+            console.log('🎫 Ticket code generato:', ticketCode)
+            
+            // Crea l'URL del QR code
+            const qrUrl = `https://web.amuseapp.art/check-in?code=${ticketCode}&museumId=${museumCode}`
+            console.log('🔗 QR URL generato:', qrUrl)
+            
+            qrCodeUrls.push(qrUrl)
+            
+          } catch (error) {
+            console.error(`❌ Errore generazione biglietto ${i + 1}:`, error)
+            // Continua con gli altri biglietti anche se uno fallisce
+          }
+        }
+        
+        console.log('✅ Tutti i QR codes generati:', qrCodeUrls)
+        
+        // Aggiorna lo stato
+        setQrCodes(qrCodeUrls)
+        setQuantity(qrCodeUrls.length)
+        setMuseumCode(museumCode)
+        
       } catch (error) {
-        console.error('❌ Errore nella generazione dei QR codes:', error)
+        console.error('❌ Errore nella generazione biglietti:', error)
+        setQrCodes([])
+        setQuantity(0)
       } finally {
         setIsLoading(false)
       }
     }
 
-    generateQRCodes()
+    generateTicketsDirectly()
   }, [])
 
 
@@ -256,37 +228,8 @@ export default function ThankYou () {
         </p>
 
 
-        {/* Messaggio se nessun pagamento confermato */}
-        {!isLoading && qrCodes.length === 0 ? (
-          <div className="w-full flex flex-col items-center space-y-6">
-            <div className="text-center space-y-4">
-              <div className="text-8xl">❌</div>
-              <h3 className="text-red-400 text-4xl font-bold">
-                Pagamento Non Confermato
-              </h3>
-              <p className="text-red-300 text-xl max-w-md">
-                Non è stato possibile confermare il pagamento. I ticket non sono stati generati.
-              </p>
-            </div>
-            
-            <div className="flex flex-col space-y-4 w-full max-w-md">
-              <Button
-                onClick={() => router.push('/')}
-                className="w-full h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xl font-medium"
-              >
-                Torna alla Home
-              </Button>
-              
-              <Button
-                onClick={() => router.back()}
-                variant="outline"
-                className="w-full h-16 border-2 border-white text-white hover:bg-white/10 rounded-lg text-xl font-light"
-              >
-                Riprova Pagamento
-              </Button>
-            </div>
-          </div>
-        ) : !isLoading && qrCodes.length > 0 ? (
+        {/* Mostra i biglietti generati */}
+        {!isLoading && qrCodes.length > 0 ? (
           <div className="w-full flex flex-col items-center space-y-2">
             {/* Container carosello */}
             <div className="relative w-full h-[28rem] flex items-center justify-center">
@@ -349,8 +292,23 @@ export default function ThankYou () {
             <p className={tabletSizes.text.body}>{t('loading', currentLanguage)}</p>
           </div>
         ) : (
-          <div className="text-white text-center">
-            <p className={tabletSizes.text.body}>Nessun QR code disponibile</p>
+          <div className="w-full flex flex-col items-center space-y-6">
+            <div className="text-center space-y-4">
+              <div className="text-8xl">🎫</div>
+              <h3 className="text-white text-4xl font-bold">
+                Biglietti Non Trovati
+              </h3>
+              <p className="text-gray-300 text-xl max-w-md">
+                Non sono stati trovati biglietti generati. Torna alla home per effettuare un nuovo acquisto.
+              </p>
+            </div>
+            
+            <Button
+              onClick={() => router.push('/')}
+              className="w-full h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xl font-medium max-w-md"
+            >
+              Torna alla Home
+            </Button>
           </div>
         )}
 
