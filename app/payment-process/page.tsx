@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
+import NavigationButtons from '@/components/NavigationButtons'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
@@ -32,14 +32,14 @@ export default function PaymentProcess () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center p-6">
+    <div className="h-screen bg-black flex flex-col items-center p-6 overflow-hidden">
       {/* Logo e nome app */}
-      <div className="pt-0 pb-0">
+      <div className="pt-0 pb-0 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
       </div>
 
       {/* Contenuto centrale */}
-      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container} mt-8`}>
+      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container} mt-8 flex-1 justify-center`}>
         {/* Istruzioni pagamento */}
         <div className="text-center space-y-4">
           <h2 className="text-white text-6xl font-bold text-center">
@@ -70,15 +70,9 @@ export default function PaymentProcess () {
       </div>
 
       {/* Pulsante indietro */}
-      <div className={`w-full max-w-md mx-auto mt-8`}>
-        <Button
-          onClick={handleBack}
-          variant="outline"
-          className={`w-full h-16 bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-lg text-3xl font-light`}
-        >
-          {t('back', currentLanguage)}
-        </Button>
-      </div>
+      <NavigationButtons
+        onBack={handleBack}
+      />
     </div>
   )
 }

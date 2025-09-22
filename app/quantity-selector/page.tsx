@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
-import { buttonStyles, tabletSizes } from '@/lib/colors'
+import NavigationButtons from '@/components/NavigationButtons'
+import { tabletSizes } from '@/lib/colors'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
 import { typography, gradients } from '@/lib/typography'
@@ -35,9 +35,9 @@ export default function QuantitySelector () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center p-6 pt-0">
+    <div className="h-screen bg-black flex flex-col items-center p-6 pt-0 overflow-hidden">
       {/* Header con logo e titolo - Allineato in alto */}
-      <div className="flex flex-col items-center pt-0 pb-4">
+      <div className="flex flex-col items-center pt-0 pb-4 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} />
         <div className="text-center mt-0">
           <h2 className="text-white text-6xl font-bold text-center">
@@ -47,7 +47,7 @@ export default function QuantitySelector () {
       </div>
 
       {/* Contenuto centrale - Centrato orizzontalmente */}
-      <div className={`flex flex-col items-center space-y-10 w-full max-w-4xl mx-auto flex-1 justify-center `}>
+      <div className={`flex flex-col items-center space-y-10 w-full max-w-4xl mx-auto flex-1 justify-center`}>
         {/* Testo descrittivo */}
         <p className="text-white text-3xl font-light text-center">
           {t('quantityDescription', currentLanguage)}
@@ -79,21 +79,11 @@ export default function QuantitySelector () {
         </div>
       </div>
 
-      {/* Pulsanti - Centrati orizzontalmente */}
-      <div className={`w-full max-w-md mx-auto space-y-4 mt-8`}>
-        <Button
-          onClick={handleProceed}
-          className={`w-full h-16 bg-teal-800 hover:bg-teal-700 text-white rounded-lg text-3xl font-light`}
-        >
-          {t('proceed', currentLanguage)}
-        </Button>
-        <Button
-          onClick={handleBack}
-          className={`w-full h-16 border-2 border-white text-white hover:bg-white/10 rounded-lg text-3xl font-light`}
-        >
-          {t('back', currentLanguage)}
-        </Button>
-      </div>
+      {/* Pulsanti - Fissi in basso */}
+      <NavigationButtons
+        onProceed={handleProceed}
+        onBack={handleBack}
+      />
     </div>
   )
 }

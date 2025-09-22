@@ -115,26 +115,27 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center p-6 pt-0 relative">
+    <div className="min-h-screen bg-black flex flex-col relative">
       {/* Tasto invisibile in alto a destra per modificare museum_id */}
       <button
         onClick={handleInvisibleButtonClick}
-        className="absolute top-4 right-4 w-8 h-8 opacity-0 hover:opacity-20 transition-opacity"
+        className="absolute top-4 right-4 w-8 h-8 opacity-0 hover:opacity-20 transition-opacity z-10"
         title="Modifica ID Museo"
       />
       
-      {/* Header con logo e titolo - Allineato in alto */}
-      <div className="flex flex-col items-center py-0 my-0">
+      {/* Header con logo e titolo - Fisso in alto */}
+      <div className="flex flex-col items-center py-6 px-6 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} />
-        <div className="text-center mt-2">
+        <div className="text-center mt-2 mb-8">
           <h2 className="text-white text-6xl font-bold text-center">
             {t('language.select')}
           </h2>
         </div>
       </div>
 
-      {/* Griglia lingue - Centrata orizzontalmente */}
-      <div className={`grid grid-cols-2 ${tabletSizes.spacing.gap} w-full max-w-6xl mx-auto`}>
+      {/* Griglia lingue - Scorrevole */}
+      <div className="flex-1 overflow-y-auto px-6 pb-6">
+        <div className={`grid grid-cols-2 ${tabletSizes.spacing.gap} w-full max-w-6xl mx-auto`}>
         {displayLanguages.length > 0 ? (
           displayLanguages.map((language, index) => {
             const langCode = language.code || 'it'
@@ -226,8 +227,8 @@ export default function LanguageSelector() {
             </button>
           </div>
         )}
+        </div>
       </div>
-
 
       {/* Dialog per configurazione museo */}
       <MuseumDialog

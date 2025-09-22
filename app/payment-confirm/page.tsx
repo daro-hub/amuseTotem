@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
-import { buttonStyles, tabletSizes } from '@/lib/colors'
+import NavigationButtons from '@/components/NavigationButtons'
+import { tabletSizes } from '@/lib/colors'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
 import { typography } from '@/lib/typography'
@@ -30,14 +30,14 @@ export default function PaymentConfirm () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center p-6">
+    <div className="h-screen bg-black flex flex-col items-center p-6 overflow-hidden">
       {/* Logo e nome app */}
-      <div className="pt-0 pb-0">
+      <div className="pt-0 pb-0 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
       </div>
 
       {/* Contenuto centrale */}
-      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container} mt-0`}>
+      <div className={`flex flex-col items-center space-y-8 w-full ${tabletSizes.spacing.container} mt-0 flex-1 justify-center`}>
         <h2 className="text-white text-6xl font-bold text-center">
           {t('paymentConfirm.title', currentLanguage)}
         </h2>
@@ -65,20 +65,11 @@ export default function PaymentConfirm () {
       </div>
 
       {/* Pulsanti */}
-      <div className={`w-full max-w-md mx-auto space-y-4`}>
-        <Button
-          onClick={handlePay}
-          className={`w-full h-16 bg-teal-800 hover:bg-teal-700 text-white rounded-lg text-3xl font-light`}
-        >
-          {t('paymentConfirm.pay', currentLanguage)}
-        </Button>
-        <Button
-          onClick={handleBack}
-          className={`w-full h-16 border-2 border-white text-white hover:bg-white/10 rounded-lg text-3xl font-light`}
-        >
-          {t('back', currentLanguage)}
-        </Button>
-      </div>
+      <NavigationButtons
+        onProceed={handlePay}
+        onBack={handleBack}
+        proceedText={t('paymentConfirm.pay', currentLanguage)}
+      />
     </div>
   )
 }
