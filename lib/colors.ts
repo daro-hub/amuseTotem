@@ -34,33 +34,33 @@ export const gradients = {
   sky: 'from-cyan-400 to-blue-400'
 }
 
-// Dimensioni ottimizzate per tablet
+// Dimensioni ottimizzate per tablet - ridotte per evitare scroll
 export const tabletSizes = {
   logo: {
-    size: 'lg' as const,
-    className: 'w-32 h-32'
+    size: 'md' as const,
+    className: 'w-24 h-24'
   },
   spacing: {
-    gap: 'gap-8',
-    padding: 'p-8',
-    margin: 'mb-8',
-    container: 'max-w-2xl'
+    gap: 'gap-4',
+    padding: 'p-4',
+    margin: 'mb-4',
+    container: 'max-w-xl'
   },
   text: {
-    title: 'text-5xl',
-    subtitle: 'text-3xl',
-    body: 'text-2xl',
-    small: 'text-xl'
+    title: 'text-4xl',
+    subtitle: 'text-2xl',
+    body: 'text-xl',
+    small: 'text-lg'
   },
   button: {
-    height: 'h-24',
-    text: 'text-3xl',
-    padding: 'px-10 py-6'
+    height: 'h-16',
+    text: 'text-2xl',
+    padding: 'px-8 py-4'
   },
   card: {
-    padding: 'p-6',
-    rounded: 'rounded-2xl',
-    minHeight: 'min-h-[200px]'
+    padding: 'p-4',
+    rounded: 'rounded-xl',
+    minHeight: 'min-h-[150px]'
   }
 }
 

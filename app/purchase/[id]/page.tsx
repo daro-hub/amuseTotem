@@ -23,7 +23,7 @@ interface Itinerary {
 const itinerariesData = {
   "1": {
     name: "Rinascimento Fiorentino",
-    price: 15,
+    price: 5,
     image: "/placeholder.svg?height=200&width=300",
     description:
       "Immergiti nell'epoca d'oro dell'arte italiana, scoprendo i capolavori che hanno cambiato la storia dell'arte mondiale.",
@@ -103,7 +103,7 @@ export default function Purchase() {
             description: data.description,
             duration: data.duration,
             poster_image: data.poster_image,
-            price: 15 // Prezzo fisso per ora
+            price: 5 // Prezzo fisso per ora
           })
         } else {
           console.log('❌ No itinerary data found')
@@ -145,7 +145,7 @@ export default function Purchase() {
     )
   }
 
-  const totalPrice = (itinerary.price || 15) * tickets
+  const totalPrice = (itinerary.price || 5) * tickets
 
   const handlePurchase = async () => {
     console.log('🎯 PULSANTE PAGA PREMUTO - Inizio processo pagamento')
@@ -313,7 +313,7 @@ export default function Purchase() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-300">{t('unitPrice')}:</span>
-                  <span className="text-white">€{itinerary.price || 15}</span>
+                  <span className="text-white">€{itinerary.price || 5}</span>
                 </div>
                 <hr className="border-gray-600" />
                 <div className="flex justify-between text-2xl font-bold">

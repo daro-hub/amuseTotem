@@ -124,10 +124,10 @@ export default function LanguageSelector() {
       />
       
       {/* Header con logo e titolo - Fisso in alto */}
-      <div className="flex flex-col items-center py-6 px-6 flex-shrink-0">
+      <div className="flex flex-col items-center py-4 px-6 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} />
-        <div className="text-center mt-2 mb-8">
-          <h2 className="text-white text-6xl font-bold text-center">
+        <div className="text-center mt-2 mb-4">
+          <h2 className="text-white text-4xl font-bold text-center">
             {t('language.select')}
           </h2>
         </div>
@@ -189,7 +189,7 @@ export default function LanguageSelector() {
               <button
                 key={uniqueKey}
                 onClick={() => handleLanguageSelect(langCode)}
-                className={`relative w-full h-40 rounded-xl transition-all overflow-hidden ${
+                className={`relative w-full h-32 rounded-xl transition-all overflow-hidden ${
                   selectedLanguage === langCode
                     ? 'ring-4 ring-white/30'
                     : 'hover:scale-105'
@@ -207,8 +207,8 @@ export default function LanguageSelector() {
                 <div className="absolute inset-0 bg-black/20"></div>
                 
                 {/* Nome della lingua sovrapposto */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
-                  <span className={`text-white ${typography.secondary.classes} font-light drop-shadow-lg`}>
+                <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
+                  <span className="text-white text-lg font-light drop-shadow-lg">
                     {language.name || langCode}
                   </span>
                 </div>

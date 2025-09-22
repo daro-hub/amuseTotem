@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       orderId,
       status,
       txCode: status === 'SUCCESSFUL' ? `TX-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}` : '',
-      amount: '15.00' // Importo di test
+      amount: '5.00' // Importo di test
     }
 
     console.log(`🧪 [TEST] Inviando callback payload:`, callbackPayload)
