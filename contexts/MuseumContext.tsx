@@ -49,7 +49,7 @@ const MuseumContext = createContext<MuseumContextType | undefined>(undefined)
 
 export function MuseumProvider({ children }: { children: ReactNode }) {
   const [museumData, setMuseumData] = useState<MuseumData | null>(null)
-  const [currentMuseumId, setCurrentMuseumId] = useState('default-museum')
+  const [currentMuseumId, setCurrentMuseumId] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 

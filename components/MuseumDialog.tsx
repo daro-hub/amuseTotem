@@ -129,10 +129,10 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
                   type="number"
                   value={museumId}
                   onChange={(e) => setMuseumId(e.target.value)}
-                  placeholder="467"
+                  placeholder=""
                   disabled={isLoading}
-                  className={`text-9xl w-48 h-20 text-center font-bold`}
-                  style={{ fontSize: '6rem', lineHeight: '1' }}
+                  className={`w-48 h-20 text-center font-bold museum-input`}
+                  style={{ fontSize: '3rem', lineHeight: '1' }}
                 />
               </div>
               {error && (

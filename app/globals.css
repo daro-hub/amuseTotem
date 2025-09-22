@@ -770,6 +770,23 @@ body::-webkit-scrollbar {
     height: 100dvh;
     overflow: hidden;
   }
+  
+  /* Forza le dimensioni corrette per evitare ridimensionamenti */
+  .language-selector {
+    font-size: 4rem !important;
+  }
+  
+  .language-selector h2 {
+    font-size: 4rem !important;
+  }
+  
+  .language-selector .grid {
+    gap: 1rem !important;
+  }
+  
+  .language-selector button {
+    height: 8rem !important;
+  }
 }
 
 /* Stili per orientamento landscape su tablet */
@@ -783,4 +800,24 @@ body::-webkit-scrollbar {
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
   }
+}
+
+/* Stili per input museo - nasconde le frecce e riduce il testo */
+.museum-input {
+  /* Nasconde le frecce per input number su WebKit */
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.museum-input::-webkit-outer-spin-button,
+.museum-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Assicura che il testo sia più piccolo dell'input */
+.museum-input {
+  font-size: 3rem !important;
+  line-height: 1 !important;
+  padding: 1rem !important;
 }

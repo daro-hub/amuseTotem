@@ -71,6 +71,8 @@ export default function LanguageSelector() {
     // Forza il re-render per assicurarsi che le dimensioni siano corrette
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'))
+      // Forza anche un re-render del componente
+      setSelectedLanguage(null)
     }, 100)
   }, [])
 
@@ -119,7 +121,7 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className="h-[100dvh] bg-black flex flex-col relative">
+    <div className="h-[100dvh] language-selector bg-black flex flex-col relative">
       {/* Tasto invisibile in alto a destra per modificare museum_id */}
       <button
         onClick={handleInvisibleButtonClick}
