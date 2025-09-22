@@ -821,3 +821,76 @@ body::-webkit-scrollbar {
   line-height: 1 !important;
   padding: 1rem !important;
 }
+
+/* Forza dimensioni consistenti per evitare problemi di zoom e font-size */
+html {
+  font-size: 16px !important;
+  -webkit-text-size-adjust: 100% !important;
+  -ms-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+body {
+  font-size: 16px !important;
+  -webkit-text-size-adjust: 100% !important;
+  -ms-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+/* Forza ricalcolo font-size su ogni navigazione */
+.language-selector {
+  font-size: 4rem !important;
+  -webkit-text-size-adjust: none !important;
+  -ms-text-size-adjust: none !important;
+  text-size-adjust: none !important;
+}
+
+.language-selector h2 {
+  font-size: 4rem !important;
+  -webkit-text-size-adjust: none !important;
+  -ms-text-size-adjust: none !important;
+  text-size-adjust: none !important;
+}
+
+.language-selector .grid {
+  gap: 1rem !important;
+}
+
+.language-selector button {
+  height: 8rem !important;
+  font-size: 1.125rem !important;
+  -webkit-text-size-adjust: none !important;
+  -ms-text-size-adjust: none !important;
+  text-size-adjust: none !important;
+}
+
+/* Nomi delle lingue più grandi e visibili */
+.language-selector button span {
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  -webkit-text-size-adjust: none !important;
+  -ms-text-size-adjust: none !important;
+  text-size-adjust: none !important;
+}
+
+/* Reset zoom e dimensioni browser */
+@media screen {
+  html {
+    zoom: 1 !important;
+    -webkit-zoom: 1 !important;
+    -moz-zoom: 1 !important;
+  }
+}
+
+/* Gestione preferenze di accessibilità */
+@media (prefers-reduced-motion: reduce) {
+  .language-selector {
+    font-size: 4rem !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .language-selector {
+    font-size: 4rem !important;
+  }
+}

@@ -8,6 +8,7 @@ import { supportedLanguages, languageToCountryCode } from "@/lib/languages"
 import { t } from "@/lib/translations"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { useMuseum } from "@/contexts/MuseumContext"
+import { useFontRecalc } from "@/hooks/use-font-recalc"
 import { MuseumDialog } from "@/components/MuseumDialog"
 import { typography, gradients } from "@/lib/typography"
 
@@ -34,6 +35,9 @@ export default function LanguageSelector() {
   const router = useRouter()
   const { t, setLanguage, currentLanguage } = useLanguage()
   const { museumId, museumData, setMuseumId } = useMuseum()
+  
+  // Hook per gestire il ricalcolo delle dimensioni
+  useFontRecalc()
 
   // Mostra dialog solo al primo accesso se non c'è museum_id
   useEffect(() => {
@@ -74,6 +78,44 @@ export default function LanguageSelector() {
       // Forza anche un re-render del componente
       setSelectedLanguage(null)
     }, 100)
+  }, [])
+
+  // Gestisce il ripristino della pagina da bfcache
+  useEffect(() => {
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        console.log('🔄 Page restored from bfcache, forcing recalculation')
+        // Forza ricalcolo completo
+        setTimeout(() => {
+          window.scrollTo(0, 0)
+          window.dispatchEvent(new Event('resize'))
+          setSelectedLanguage(null)
+          // Forza ricalcolo font-size
+          document.body.style.fontSize = ''
+          document.documentElement.style.fontSize = ''
+          // Trigger reflow
+          document.body.offsetHeight
+        }, 50)
+      }
+    }
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        console.log('🔄 Page became visible, forcing recalculation')
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'))
+          setSelectedLanguage(null)
+        }, 100)
+      }
+    }
+
+    window.addEventListener('pageshow', handlePageShow)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [])
 
   const handleLanguageSelect = (langCode: string) => {
@@ -213,8 +255,8 @@ export default function LanguageSelector() {
                 <div className="absolute inset-0 bg-black/20"></div>
                 
                 {/* Nome della lingua sovrapposto */}
-                <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
-                  <span className="text-white text-lg font-light drop-shadow-lg">
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
+                  <span className="text-white text-2xl font-medium drop-shadow-lg">
                     {language.name || langCode}
                   </span>
                 </div>
