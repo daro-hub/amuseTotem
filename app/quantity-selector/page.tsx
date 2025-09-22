@@ -35,7 +35,7 @@ export default function QuantitySelector () {
   }
 
   return (
-    <div className="h-screen bg-black flex flex-col items-center p-6 pt-0 overflow-hidden">
+    <div className="h-[100dvh] page-container bg-black flex flex-col items-center p-6 pt-0 overflow-hidden">
       {/* Header con logo e titolo - Allineato in alto */}
       <div className="flex flex-col items-center pt-2 pb-2 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} />

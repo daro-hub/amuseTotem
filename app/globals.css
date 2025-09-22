@@ -756,6 +756,20 @@ body::-webkit-scrollbar {
     bottom: 2rem;
     right: 2rem;
   }
+  
+  /* Forza il viewport height corretto su tablet */
+  html, body {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  
+  /* Assicura che le pagine usino tutto lo spazio disponibile */
+  .page-container {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
 }
 
 /* Stili per orientamento landscape su tablet */

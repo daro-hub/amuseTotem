@@ -30,7 +30,7 @@ export default function PaymentConfirm () {
   }
 
   return (
-    <div className="h-screen bg-black flex flex-col items-center p-6 overflow-hidden">
+    <div className="h-[100dvh] page-container bg-black flex flex-col items-center p-6 overflow-hidden">
       {/* Logo e nome app */}
       <div className="pt-2 pb-2 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />

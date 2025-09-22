@@ -68,6 +68,10 @@ export default function LanguageSelector() {
   // Reset scroll position when component mounts
   useEffect(() => {
     window.scrollTo(0, 0)
+    // Forza il re-render per assicurarsi che le dimensioni siano corrette
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 100)
   }, [])
 
   const handleLanguageSelect = (langCode: string) => {
@@ -115,7 +119,7 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col relative">
+    <div className="h-[100dvh] bg-black flex flex-col relative">
       {/* Tasto invisibile in alto a destra per modificare museum_id */}
       <button
         onClick={handleInvisibleButtonClick}
