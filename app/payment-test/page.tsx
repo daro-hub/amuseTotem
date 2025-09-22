@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import AmuseLogo from '@/components/AmuseLogo'
@@ -8,7 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
 
-export default function PaymentTestPage() {
+function PaymentTestContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { currentLanguage } = useLanguage()
@@ -154,5 +154,17 @@ export default function PaymentTestPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PaymentTestPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6">
+        <div className="text-white text-2xl">Caricamento...</div>
+      </div>
+    }>
+      <PaymentTestContent />
+    </Suspense>
   )
 }
