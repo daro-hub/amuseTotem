@@ -7,11 +7,15 @@ import AmuseLogo from '@/components/AmuseLogo'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
 import { tabletSizes } from '@/lib/colors'
+import { useScrollControl } from '@/hooks/use-scroll-control'
 
 function PaymentTestContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { currentLanguage } = useLanguage()
+  
+  // Controlla lo scroll su tablet
+  useScrollControl()
   
   const orderId = searchParams.get('orderId')
   const [isTesting, setIsTesting] = useState(false)

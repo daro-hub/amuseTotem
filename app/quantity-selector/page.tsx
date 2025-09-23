@@ -8,11 +8,15 @@ import { tabletSizes } from '@/lib/colors'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
 import { typography, gradients } from '@/lib/typography'
+import { useScrollControl } from '@/hooks/use-scroll-control'
 
 export default function QuantitySelector () {
   const [quantity, setQuantity] = useState(1)
   const router = useRouter()
   const { currentLanguage } = useLanguage()
+  
+  // Controlla lo scroll su tablet
+  useScrollControl()
 
   const handleDecrease = () => {
     if (quantity > 1) {

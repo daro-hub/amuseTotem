@@ -9,12 +9,16 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { useMuseum } from '@/contexts/MuseumContext'
 import { t } from '@/lib/translations'
 import { typography } from '@/lib/typography'
+import { useScrollControl } from '@/hooks/use-scroll-control'
 
 export default function PaymentConfirm () {
   const [quantity, setQuantity] = useState(1)
   const router = useRouter()
   const { currentLanguage } = useLanguage()
   const { ticketPrice, currency, mode } = useMuseum()
+  
+  // Controlla lo scroll su tablet
+  useScrollControl()
 
   useEffect(() => {
     const savedQuantity = localStorage.getItem('ticketQuantity')

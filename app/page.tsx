@@ -163,7 +163,7 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className="h-[100dvh] language-selector bg-black flex flex-col relative">
+    <div className="h-[100dvh] language-selector language-selector-page bg-black flex flex-col relative">
       {/* Tasto invisibile in alto a destra per modificare museum_id */}
       <button
         onClick={handleInvisibleButtonClick}

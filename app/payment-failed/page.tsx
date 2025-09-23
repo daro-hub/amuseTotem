@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useMuseum } from '@/contexts/MuseumContext'
 import { t } from '@/lib/translations'
+import { useScrollControl } from '@/hooks/use-scroll-control'
 import NavigationButtons from '@/components/NavigationButtons'
 import AmuseLogo from '@/components/AmuseLogo'
 import { tabletSizes } from '@/lib/colors'
@@ -14,6 +15,9 @@ export default function PaymentFailed() {
   const { currentLanguage } = useLanguage()
   const { ticketPrice, currency, mode } = useMuseum()
   const [countdown, setCountdown] = useState(10)
+  
+  // Controlla lo scroll su tablet
+  useScrollControl()
   const [paymentData, setPaymentData] = useState<any>(null)
 
   useEffect(() => {

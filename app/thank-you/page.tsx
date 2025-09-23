@@ -206,7 +206,7 @@ export default function ThankYou () {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-between p-6 max-w-2xl mx-auto">
+    <div className="min-h-screen thank-you-page bg-black flex flex-col items-center justify-between p-6 max-w-2xl mx-auto">
       <style jsx>{`
         .qr-scroll::-webkit-scrollbar {
           display: none;

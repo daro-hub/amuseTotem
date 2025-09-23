@@ -78,8 +78,16 @@ function MuseumProviderContent({ children }: { children: ReactNode }) {
       (typeof window !== 'undefined' && localStorage.getItem('urlTicketPrice') ? parseFloat(localStorage.getItem('urlTicketPrice')!) : 5)
     const initialCurrency = urlParams.currency || 
       (typeof window !== 'undefined' ? localStorage.getItem('urlCurrency') : null) || 'EUR'
-    const initialMode = urlParams.mode || 
-      (typeof window !== 'undefined' ? localStorage.getItem('urlMode') as 'test' | 'museo' | 'chiesa' : null) || 'test'
+    // Modalità: priorità URL, poi localStorage, poi default 'test'
+    let initialMode: 'test' | 'museo' | 'chiesa' = 'test'
+    
+    if (urlParams.mode) {
+      initialMode = urlParams.mode
+    } else if (typeof window !== 'undefined' && localStorage.getItem('urlMode')) {
+      const savedMode = localStorage.getItem('urlMode') as 'test' | 'museo' | 'chiesa'
+      // Solo se è esplicitamente 'museo', altrimenti usa 'test'
+      initialMode = savedMode === 'museo' ? 'museo' : 'test'
+    }
     
     console.log('🔄 MuseumContext initializing values:', {
       urlParams: { ticketPrice: urlParams.ticketPrice, currency: urlParams.currency, mode: urlParams.mode },
@@ -201,13 +209,18 @@ function MuseumProviderContent({ children }: { children: ReactNode }) {
       const savedUrlMode = localStorage.getItem('urlMode')
       
       if (savedUrlMuseumId) {
+        // Solo se la modalità salvata è 'museo', altrimenti usa 'test'
+        const modeToUse = savedUrlMode === 'museo' ? 'museo' : 'test'
+        
         console.log('🔄 Restoring URL parameters from localStorage:', {
           museumId: savedUrlMuseumId,
           ticketPrice: savedUrlTicketPrice,
           currency: savedUrlCurrency,
-          mode: savedUrlMode
+          mode: savedUrlMode,
+          modeToUse: modeToUse
         })
         setCurrentMuseumId(savedUrlMuseumId)
+        setMode(modeToUse)
         fetchMuseumData(savedUrlMuseumId)
       }
     }
@@ -224,8 +237,16 @@ function MuseumProviderContent({ children }: { children: ReactNode }) {
       const savedUrlMode = localStorage.getItem('urlMode')
       
       if (savedUrlMuseumId && !urlParams.museumId) {
-        console.log('🔄 Force restoring URL parameters on page load')
+        // Solo se la modalità salvata è 'museo', altrimenti usa 'test'
+        const modeToUse = savedUrlMode === 'museo' ? 'museo' : 'test'
+        
+        console.log('🔄 Force restoring URL parameters on page load', {
+          museumId: savedUrlMuseumId,
+          mode: savedUrlMode,
+          modeToUse: modeToUse
+        })
         setCurrentMuseumId(savedUrlMuseumId)
+        setMode(modeToUse)
         fetchMuseumData(savedUrlMuseumId)
       }
     }
@@ -258,6 +279,7 @@ function MuseumProviderContent({ children }: { children: ReactNode }) {
       localStorage.setItem('urlTicketPrice', newTicketPrice.toString())
       localStorage.setItem('urlCurrency', newCurrency)
       localStorage.setItem('urlMode', newMode)
+      console.log('💾 Saved config to localStorage:', { ticketPrice: newTicketPrice, currency: newCurrency, mode: newMode })
     }
   }
 

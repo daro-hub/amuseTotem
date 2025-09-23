@@ -6,6 +6,7 @@ import AmuseLogo from '@/components/AmuseLogo'
 import NavigationButtons from '@/components/NavigationButtons'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { t } from '@/lib/translations'
+import { useScrollControl } from '@/hooks/use-scroll-control'
 import { tabletSizes } from '@/lib/colors'
 import { typography } from '@/lib/typography'
 
@@ -13,6 +14,9 @@ export default function PaymentProcess () {
   const router = useRouter()
   const [isProcessing, setIsProcessing] = useState(false)
   const { currentLanguage } = useLanguage()
+  
+  // Controlla lo scroll su tablet
+  useScrollControl()
 
   useEffect(() => {
     // Simula il processo di pagamento
