@@ -70,7 +70,7 @@ function MuseumProviderContent({ children }: { children: ReactNode }) {
   // Stati per i parametri configurabili
   const [ticketPrice, setTicketPrice] = useState(5)
   const [currency, setCurrency] = useState('EUR')
-  const [mode, setMode] = useState<'test' | 'museo' | 'chiesa'>('museo')
+  const [mode, setMode] = useState<'test' | 'museo' | 'chiesa'>('test')
   
   // Inizializza i valori dai parametri URL o localStorage
   useEffect(() => {
@@ -79,7 +79,17 @@ function MuseumProviderContent({ children }: { children: ReactNode }) {
     const initialCurrency = urlParams.currency || 
       (typeof window !== 'undefined' ? localStorage.getItem('urlCurrency') : null) || 'EUR'
     const initialMode = urlParams.mode || 
-      (typeof window !== 'undefined' ? localStorage.getItem('urlMode') as 'test' | 'museo' | 'chiesa' : null) || 'museo'
+      (typeof window !== 'undefined' ? localStorage.getItem('urlMode') as 'test' | 'museo' | 'chiesa' : null) || 'test'
+    
+    console.log('🔄 MuseumContext initializing values:', {
+      urlParams: { ticketPrice: urlParams.ticketPrice, currency: urlParams.currency, mode: urlParams.mode },
+      localStorage: {
+        ticketPrice: typeof window !== 'undefined' ? localStorage.getItem('urlTicketPrice') : 'N/A',
+        currency: typeof window !== 'undefined' ? localStorage.getItem('urlCurrency') : 'N/A',
+        mode: typeof window !== 'undefined' ? localStorage.getItem('urlMode') : 'N/A'
+      },
+      final: { ticketPrice: initialTicketPrice, currency: initialCurrency, mode: initialMode }
+    })
     
     setTicketPrice(initialTicketPrice)
     setCurrency(initialCurrency)

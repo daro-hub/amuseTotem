@@ -759,16 +759,35 @@ body::-webkit-scrollbar {
   
   /* Forza il viewport height corretto su tablet */
   html, body {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
   }
   
   /* Assicura che le pagine usino tutto lo spazio disponibile */
   .page-container {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+  }
+  
+  /* Forza il layout per evitare scroll su tutte le pagine tranne language selector */
+  .no-scroll-page {
+    height: 100vh !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
   }
   
   /* Forza le dimensioni corrette per evitare ridimensionamenti */

@@ -71,7 +71,7 @@ export default function PaymentFailed() {
   }
 
   return (
-    <div className="h-[100dvh] bg-black flex flex-col items-center p-6 overflow-hidden">
+    <div className="h-[100dvh] page-container no-scroll-page bg-black flex flex-col items-center p-6 overflow-hidden">
       {/* Header con logo, titolo e sottotitolo - Allineato in alto */}
       <div className="flex flex-col items-center pt-2 pb-2 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} />

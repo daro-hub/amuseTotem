@@ -25,7 +25,7 @@ export function MuseumDialog({
   currentMuseumId,
   currentTicketPrice = 5,
   currentCurrency = 'EUR',
-  currentMode = 'museo',
+  currentMode = 'test',
   onConfigUpdate
 }: MuseumDialogProps) {
   const [museumId, setMuseumId] = useState(currentMuseumId || '')
@@ -37,6 +37,12 @@ export function MuseumDialog({
 
   useEffect(() => {
     if (isOpen) {
+      console.log('🔄 MuseumDialog opening with values:', {
+        museumId: currentMuseumId,
+        ticketPrice: currentTicketPrice,
+        currency: currentCurrency,
+        mode: currentMode
+      })
       setMuseumId(currentMuseumId || '')
       setTicketPrice(currentTicketPrice)
       setCurrency(currentCurrency)
