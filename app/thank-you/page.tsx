@@ -212,20 +212,21 @@ export default function ThankYou () {
           display: none;
         }
       `}</style>
-      {/* Logo e nome app */}
-      <div className="pt-0 pb-0">
-        <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
+      {/* Header con logo, titolo e sottotitolo - Allineato in alto */}
+      <div className="flex flex-col items-center pt-2 pb-2 flex-shrink-0">
+        <AmuseLogo size={tabletSizes.logo.size} />
+        <div className="text-center mt-1">
+          <h2 className="text-white text-4xl font-bold text-center">
+            {t('thankYou.title', currentLanguage)}
+          </h2>
+          <p className="text-white text-2xl font-light text-center mt-2">
+            {t('thankYou.subtitle', currentLanguage)}
+          </p>
+        </div>
       </div>
 
       {/* Contenuto centrale */}
-      <div className="flex flex-col items-center space-y-4 w-full max-w-4xl">
-        <h2 className="text-white text-6xl font-bold text-center">
-          {t('thankYou.title', currentLanguage)}
-        </h2>
-        
-        <p className="text-white text-3xl font-light text-center">
-          {t('thankYou.subtitle', currentLanguage)}
-        </p>
+      <div className="flex flex-col items-center space-y-4 w-full max-w-4xl flex-1 justify-center">
 
 
         {/* Mostra i biglietti generati */}

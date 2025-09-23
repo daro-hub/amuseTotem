@@ -23,21 +23,21 @@ interface Itinerary {
 const itinerariesData = {
   "1": {
     name: "Rinascimento Fiorentino",
-    price: 5,
+    price: 5, // Questo sarà sovrascritto dal context
     image: "/placeholder.svg?height=200&width=300",
     description:
       "Immergiti nell'epoca d'oro dell'arte italiana, scoprendo i capolavori che hanno cambiato la storia dell'arte mondiale.",
   },
   "2": {
     name: "Avventura per Famiglie",
-    price: 12,
+    price: 12, // Questo sarà sovrascritto dal context
     image: "/placeholder.svg?height=200&width=300",
     description:
       "Un viaggio magico attraverso l'arte, pensato per coinvolgere e divertire tutta la famiglia con attività interattive.",
   },
   "3": {
     name: "Segreti dell'Arte",
-    price: 20,
+    price: 20, // Questo sarà sovrascritto dal context
     image: "/placeholder.svg?height=200&width=300",
     description:
       "Un'esperienza approfondita per esperti e appassionati, con analisi tecniche e retroscena storici delle opere più importanti.",
@@ -47,7 +47,7 @@ const itinerariesData = {
 export default function Purchase() {
   const params = useParams()
   const router = useRouter()
-  const { museumData } = useMuseum()
+  const { museumData, ticketPrice, currency } = useMuseum()
   const { t } = useLanguage()
   const itineraryCode = params.id as string
   
@@ -103,7 +103,7 @@ export default function Purchase() {
             description: data.description,
             duration: data.duration,
             poster_image: data.poster_image,
-            price: 5 // Prezzo fisso per ora
+            price: ticketPrice // Prezzo dinamico dal context
           })
         } else {
           console.log('❌ No itinerary data found')
@@ -145,7 +145,7 @@ export default function Purchase() {
     )
   }
 
-  const totalPrice = (itinerary.price || 5) * tickets
+  const totalPrice = (itinerary.price || ticketPrice) * tickets
 
   const handlePurchase = async () => {
     console.log('🎯 PULSANTE PAGA PREMUTO - Inizio processo pagamento')
@@ -313,12 +313,12 @@ export default function Purchase() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-300">{t('unitPrice')}:</span>
-                  <span className="text-white">€{itinerary.price || 5}</span>
+                  <span className="text-white">{currency} {itinerary.price || ticketPrice}</span>
                 </div>
                 <hr className="border-gray-600" />
                 <div className="flex justify-between text-2xl font-bold">
                   <span className="text-[#8ac926]">{t('total')}:</span>
-                  <span className="text-[#8ac926]">€{totalPrice}</span>
+                  <span className="text-[#8ac926]">{currency} {totalPrice}</span>
                 </div>
               </div>
             </div>

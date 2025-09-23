@@ -36,44 +36,43 @@ export default function QuantitySelector () {
 
   return (
     <div className="h-[100dvh] page-container bg-black flex flex-col items-center p-6 pt-0 overflow-hidden">
-      {/* Header con logo e titolo - Allineato in alto */}
+      {/* Header con logo, titolo e sottotitolo - Allineato in alto */}
       <div className="flex flex-col items-center pt-2 pb-2 flex-shrink-0">
         <AmuseLogo size={tabletSizes.logo.size} />
         <div className="text-center mt-1">
-          <h2 className="text-white text-4xl font-bold text-center">
+          <h2 className="text-white text-5xl font-bold text-center">
             {t('selectQuantity', currentLanguage)}
           </h2>
+          <p className="text-white text-3xl font-light text-center mt-2">
+            {t('quantityDescription', currentLanguage)}
+          </p>
         </div>
       </div>
 
       {/* Contenuto centrale - Centrato orizzontalmente */}
       <div className={`flex flex-col items-center space-y-6 w-full max-w-2xl mx-auto flex-1 justify-center`}>
-        {/* Testo descrittivo */}
-        <p className="text-white text-2xl font-light text-center">
-          {t('quantityDescription', currentLanguage)}
-        </p>
 
         {/* Sezione selezione quantità */}
         <div className="w-full">
           
           {/* Selettore quantità */}
-          <div className="flex items-center justify-center space-x-8">
+          <div className="flex items-center justify-center space-x-16">
             <button
               onClick={handleDecrease}
-              className="w-16 h-16 border-2 border-white rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors"
+              className="w-28 h-28 border-2 border-white rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors"
             >
-              <span className="text-white text-2xl font-light">-</span>
+              <span className="text-white text-6xl font-bold">-</span>
             </button>
             
-            <div className={`text-white text-4xl font-bold min-w-[4rem] text-center`}>
+            <div className={`text-white text-8xl font-bold min-w-[8rem] text-center`}>
               {quantity}
             </div>
             
             <button
               onClick={handleIncrease}
-              className="w-16 h-16 border-2 border-white rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors"
+              className="w-28 h-28 border-2 border-white rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors"
             >
-              <span className="text-white text-2xl font-light">+</span>
+              <span className="text-white text-6xl font-bold">+</span>
             </button>
           </div>
         </div>

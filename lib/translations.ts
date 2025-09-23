@@ -61,6 +61,100 @@ export const translations: Translations = {
     ms: 'Kembali', sw: 'Rudi', cs: 'Zpět', fi: 'Takaisin',
     no: 'Tilbake', hi: 'वापस'
   },
+
+  // Pagamento
+  'processingPayment': {
+    it: 'Elaborazione pagamento...', en: 'Processing payment...', es: 'Procesando pago...', fr: 'Traitement du paiement...', de: 'Zahlung wird verarbeitet...',
+    sv: 'Bearbetar betalning...', pt: 'Processando pagamento...', zh: '处理付款中...', jp: '支払い処理中...', ko: '결제 처리 중...',
+    ar: 'معالجة الدفع...', pl: 'Przetwarzanie płatności...', ru: 'Обработка платежа...', sl: 'Obdelava plačila...', hu: 'Fizetés feldolgozása...',
+    sk: 'Spracovanie platby...', uk: 'Обробка платежу...', ro: 'Procesare plată...', da: 'Behandler betaling...', tr: 'Ödeme işleniyor...',
+    el: 'Επεξεργασία πληρωμής...', bn: 'পেমেন্ট প্রক্রিয়াকরণ...', nl: 'Betaling verwerken...', sq: 'Përpunimi i pagesës...', id: 'Memproses pembayaran...',
+    th: 'กำลังประมวลผลการชำระเงิน...', vi: 'Đang xử lý thanh toán...', he: 'מעבד תשלום...', fa: 'در حال پردازش پرداخت...', tl: 'Pinoproseso ang bayad...',
+    ms: 'Memproses pembayaran...', sw: 'Inachakata malipo...', cs: 'Zpracování platby...', fi: 'Käsitellään maksua...',
+    no: 'Behandler betaling...', hi: 'भुगतान प्रसंस्करण...'
+  },
+  'pleaseWait': {
+    it: 'Attendere prego...', en: 'Please wait...', es: 'Por favor espere...', fr: 'Veuillez patienter...', de: 'Bitte warten...',
+    sv: 'Vänta...', pt: 'Por favor aguarde...', zh: '请稍候...', jp: 'お待ちください...', ko: '잠시만 기다려주세요...',
+    ar: 'يرجى الانتظار...', pl: 'Proszę czekać...', ru: 'Пожалуйста, подождите...', sl: 'Prosimo počakajte...', hu: 'Kérem várjon...',
+    sk: 'Prosím čakajte...', uk: 'Будь ласка, зачекайте...', ro: 'Vă rugăm să așteptați...', da: 'Vent venligst...', tr: 'Lütfen bekleyin...',
+    el: 'Παρακαλώ περιμένετε...', bn: 'অনুগ্রহ করে অপেক্ষা করুন...', nl: 'Even geduld...', sq: 'Ju lutemi prisni...', id: 'Mohon tunggu...',
+    th: 'กรุณารอสักครู่...', vi: 'Vui lòng đợi...', he: 'אנא המתן...', fa: 'لطفا صبر کنید...', tl: 'Mangyaring maghintay...',
+    ms: 'Sila tunggu...', sw: 'Tafadhali subiri...', cs: 'Prosím čekejte...', fi: 'Odota...',
+    no: 'Vennligst vent...', hi: 'कृपया प्रतीक्षा करें...'
+  },
+
+  // Pagamento fallito
+  'paymentFailed.title': {
+    it: 'Pagamento Fallito', en: 'Payment Failed', es: 'Pago Fallido', fr: 'Paiement Échoué', de: 'Zahlung Fehlgeschlagen',
+    sv: 'Betalning Misslyckades', pt: 'Pagamento Falhou', zh: '付款失败', jp: '支払い失敗', ko: '결제 실패',
+    ar: 'فشل الدفع', pl: 'Płatność Nieudana', ru: 'Платеж Не Удался', sl: 'Plačilo Neuspešno', hu: 'Fizetés Sikertelen',
+    sk: 'Platba Neúspešná', uk: 'Платіж Не Вдався', ro: 'Plata Eșuată', da: 'Betaling Mislykkedes', tr: 'Ödeme Başarısız',
+    el: 'Η Πληρωμή Απέτυχε', bn: 'পেমেন্ট ব্যর্থ', nl: 'Betaling Mislukt', sq: 'Pagesa Dështoi', id: 'Pembayaran Gagal',
+    th: 'การชำระเงินล้มเหลว', vi: 'Thanh Toán Thất Bại', he: 'התשלום נכשל', fa: 'پرداخت ناموفق', tl: 'Nabigo ang Bayad',
+    ms: 'Pembayaran Gagal', sw: 'Malipo Yalishindwa', cs: 'Platba Neúspěšná', fi: 'Maksu Epäonnistui',
+    no: 'Betaling Mislyktes', hi: 'भुगतान विफल'
+  },
+  'paymentFailed.message': {
+    it: 'Il pagamento non è stato completato con successo. Riprova o annulla l\'operazione.', en: 'Payment was not completed successfully. Please try again or cancel the operation.', es: 'El pago no se completó exitosamente. Inténtalo de nuevo o cancela la operación.', fr: 'Le paiement n\'a pas été complété avec succès. Veuillez réessayer ou annuler l\'opération.', de: 'Die Zahlung wurde nicht erfolgreich abgeschlossen. Bitte versuchen Sie es erneut oder brechen Sie den Vorgang ab.',
+    sv: 'Betalningen slutfördes inte framgångsrikt. Försök igen eller avbryt operationen.', pt: 'O pagamento não foi concluído com sucesso. Tente novamente ou cancele a operação.', zh: '付款未成功完成。请重试或取消操作。', jp: '支払いが正常に完了しませんでした。再試行するか、操作をキャンセルしてください。', ko: '결제가 성공적으로 완료되지 않았습니다. 다시 시도하거나 작업을 취소하세요.',
+    ar: 'لم يتم إكمال الدفع بنجاح. يرجى المحاولة مرة أخرى أو إلغاء العملية.', pl: 'Płatność nie została zakończona pomyślnie. Spróbuj ponownie lub anuluj operację.', ru: 'Платеж не был успешно завершен. Попробуйте еще раз или отмените операцию.', sl: 'Plačilo ni bilo uspešno dokončano. Poskusite znova ali prekličite operacijo.', hu: 'A fizetés nem fejeződött be sikeresen. Kérjük, próbálja újra vagy szakítsa meg a műveletet.',
+    sk: 'Platba nebola úspešne dokončená. Skúste to znova alebo zrušte operáciu.', uk: 'Платіж не був успішно завершений. Спробуйте ще раз або скасуйте операцію.', ro: 'Plata nu a fost finalizată cu succes. Vă rugăm să încercați din nou sau să anulați operațiunea.', da: 'Betalingen blev ikke gennemført med succes. Prøv igen eller annuller operationen.', tr: 'Ödeme başarıyla tamamlanmadı. Lütfen tekrar deneyin veya işlemi iptal edin.',
+    el: 'Η πληρωμή δεν ολοκληρώθηκε επιτυχώς. Παρακαλώ δοκιμάστε ξανά ή ακυρώστε τη λειτουργία.', bn: 'পেমেন্ট সফলভাবে সম্পন্ন হয়নি। অনুগ্রহ করে আবার চেষ্টা করুন বা অপারেশন বাতিল করুন।', nl: 'De betaling is niet succesvol voltooid. Probeer opnieuw of annuleer de operatie.', sq: 'Pagesa nuk u përfundua me sukses. Ju lutemi provoni përsëri ose anuloni operacionin.', id: 'Pembayaran tidak berhasil diselesaikan. Silakan coba lagi atau batalkan operasi.',
+    th: 'การชำระเงินไม่สำเร็จ กรุณาลองใหม่หรือยกเลิกการดำเนินการ', vi: 'Thanh toán không được hoàn thành thành công. Vui lòng thử lại hoặc hủy bỏ thao tác.', he: 'התשלום לא הושלם בהצלחה. אנא נסה שוב או בטל את הפעולה.', fa: 'پرداخت با موفقیت تکمیل نشد. لطفاً دوباره تلاش کنید یا عملیات را لغو کنید.', tl: 'Ang bayad ay hindi matagumpay na nakumpleto. Mangyaring subukan muli o kanselahin ang operasyon.',
+    ms: 'Pembayaran tidak berjaya diselesaikan. Sila cuba lagi atau batalkan operasi.', sw: 'Malipo hayajakamilika kwa mafanikio. Tafadhali jaribu tena au ghairi operesheni.', cs: 'Platba nebyla úspěšně dokončena. Zkuste to znovu nebo zrušte operaci.', fi: 'Maksu ei valmistunut onnistuneesti. Yritä uudelleen tai peruuta toiminto.',
+    no: 'Betalingen ble ikke fullført. Prøv igjen eller avbryt operasjonen.', hi: 'भुगतान सफलतापूर्वक पूरा नहीं हुआ। कृपया पुनः प्रयास करें या ऑपरेशन रद्द करें।'
+  },
+  'paymentFailed.retry': {
+    it: 'Riprova Pagamento', en: 'Retry Payment', es: 'Reintentar Pago', fr: 'Réessayer le Paiement', de: 'Zahlung Wiederholen',
+    sv: 'Försök Betalning', pt: 'Tentar Pagamento', zh: '重试付款', jp: '支払いを再試行', ko: '결제 재시도',
+    ar: 'إعادة المحاولة', pl: 'Spróbuj Ponownie', ru: 'Повторить Платеж', sl: 'Poskusi Ponovno', hu: 'Újra Próbálkozás',
+    sk: 'Skúsiť Znovu', uk: 'Повторити Платіж', ro: 'Încearcă Din Nou', da: 'Prøv Betaling', tr: 'Ödemeyi Tekrarla',
+    el: 'Επανάληψη Πληρωμής', bn: 'পেমেন্ট পুনরায় চেষ্টা করুন', nl: 'Betaling Opnieuw Proberen', sq: 'Provo Përsëri', id: 'Coba Lagi Pembayaran',
+    th: 'ลองชำระเงินอีกครั้ง', vi: 'Thử Lại Thanh Toán', he: 'נסה שוב תשלום', fa: 'تلاش مجدد پرداخت', tl: 'Subukan Muli ang Bayad',
+    ms: 'Cuba Semula Pembayaran', sw: 'Jaribu Malipo Tena', cs: 'Zkusit Platbu Znovu', fi: 'Yritä Maksua Uudelleen',
+    no: 'Prøv Betaling Igjen', hi: 'भुगतान पुनः प्रयास करें'
+  },
+  'paymentFailed.cancel': {
+    it: 'Annulla', en: 'Cancel', es: 'Cancelar', fr: 'Annuler', de: 'Abbrechen',
+    sv: 'Avbryt', pt: 'Cancelar', zh: '取消', jp: 'キャンセル', ko: '취소',
+    ar: 'إلغاء', pl: 'Anuluj', ru: 'Отменить', sl: 'Prekliči', hu: 'Mégse',
+    sk: 'Zrušiť', uk: 'Скасувати', ro: 'Anulează', da: 'Annuller', tr: 'İptal',
+    el: 'Ακύρωση', bn: 'বাতিল', nl: 'Annuleren', sq: 'Anulo', id: 'Batal',
+    th: 'ยกเลิก', vi: 'Hủy', he: 'בטל', fa: 'لغو', tl: 'Kanselahin',
+    ms: 'Batal', sw: 'Ghairi', cs: 'Zrušit', fi: 'Peruuta',
+    no: 'Avbryt', hi: 'रद्द करें'
+  },
+  'paymentFailed.autoRedirect': {
+    it: 'Reindirizzamento automatico tra', en: 'Auto redirect in', es: 'Redirección automática en', fr: 'Redirection automatique dans', de: 'Automatische Weiterleitung in',
+    sv: 'Auto-omdirigering om', pt: 'Redirecionamento automático em', zh: '自动重定向', jp: '自動リダイレクト', ko: '자동 리디렉션',
+    ar: 'إعادة توجيه تلقائية خلال', pl: 'Automatyczne przekierowanie za', ru: 'Автоматическое перенаправление через', sl: 'Samodejno preusmeritev čez', hu: 'Automatikus átirányítás',
+    sk: 'Automatické presmerovanie za', uk: 'Автоматичне перенаправлення через', ro: 'Redirecționare automată în', da: 'Auto-omdirigering om', tr: 'Otomatik yönlendirme',
+    el: 'Αυτόματη ανακατεύθυνση σε', bn: 'স্বয়ংক্রিয় পুনর্নির্দেশ', nl: 'Automatische doorverwijzing over', sq: 'Ridrejtim automatik në', id: 'Pengalihan otomatis dalam',
+    th: 'การเปลี่ยนเส้นทางอัตโนมัติใน', vi: 'Chuyển hướng tự động trong', he: 'הפניה אוטומטית תוך', fa: 'تغییر مسیر خودکار در', tl: 'Awtomatikong pag-redirect sa',
+    ms: 'Pengalihan automatik dalam', sw: 'Uelekezaji wa kiotomatiki katika', cs: 'Automatické přesměrování za', fi: 'Automaattinen uudelleenohjaus',
+    no: 'Auto-omdirigering om', hi: 'स्वचालित पुनर्निर्देशन'
+  },
+  'paymentFailed.unknownError': {
+    it: 'Errore sconosciuto', en: 'Unknown error', es: 'Error desconocido', fr: 'Erreur inconnue', de: 'Unbekannter Fehler',
+    sv: 'Okänt fel', pt: 'Erro desconhecido', zh: '未知错误', jp: '不明なエラー', ko: '알 수 없는 오류',
+    ar: 'خطأ غير معروف', pl: 'Nieznany błąd', ru: 'Неизвестная ошибка', sl: 'Neznana napaka', hu: 'Ismeretlen hiba',
+    sk: 'Neznáma chyba', uk: 'Невідома помилка', ro: 'Eroare necunoscută', da: 'Ukendt fejl', tr: 'Bilinmeyen hata',
+    el: 'Άγνωστο σφάλμα', bn: 'অজানা ত্রুটি', nl: 'Onbekende fout', sq: 'Gabim i panjohur', id: 'Kesalahan tidak diketahui',
+    th: 'ข้อผิดพลาดที่ไม่ทราบ', vi: 'Lỗi không xác định', he: 'שגיאה לא ידועה', fa: 'خطای ناشناخته', tl: 'Hindi kilalang error',
+    ms: 'Ralat tidak diketahui', sw: 'Hitilafu isiyojulikana', cs: 'Neznámá chyba', fi: 'Tuntematon virhe',
+    no: 'Ukjent feil', hi: 'अज्ञात त्रुटि'
+  },
+  'paymentFailed.transactionCode': {
+    it: 'Codice transazione', en: 'Transaction code', es: 'Código de transacción', fr: 'Code de transaction', de: 'Transaktionscode',
+    sv: 'Transaktionskod', pt: 'Código da transação', zh: '交易代码', jp: '取引コード', ko: '거래 코드',
+    ar: 'رمز المعاملة', pl: 'Kod transakcji', ru: 'Код транзакции', sl: 'Koda transakcije', hu: 'Tranzakció kód',
+    sk: 'Kód transakcie', uk: 'Код транзакції', ro: 'Codul tranzacției', da: 'Transaktionskode', tr: 'İşlem kodu',
+    el: 'Κωδικός συναλλαγής', bn: 'লেনদেনের কোড', nl: 'Transactiecode', sq: 'Kodi i transaksionit', id: 'Kode transaksi',
+    th: 'รหัสธุรกรรม', vi: 'Mã giao dịch', he: 'קוד עסקה', fa: 'کد تراکنش', tl: 'Kodigo ng transaksyon',
+    ms: 'Kod transaksi', sw: 'Msimbo wa muamala', cs: 'Kód transakce', fi: 'Tapahtumakoodi',
+    no: 'Transaksjonskode', hi: 'लेनदेन कोड'
+  },
   'button.buy': {
     it: 'Acquista', en: 'Buy', es: 'Comprar', fr: 'Acheter', de: 'Kaufen',
     sv: 'Köp', pt: 'Comprar', zh: '购买', jp: '購入', ko: '구매',

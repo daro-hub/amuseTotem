@@ -21,8 +21,8 @@ export default function NavigationButtons({
   proceedText,
   backText,
   proceedDisabled = false,
-  proceedClassName = "w-full h-14 bg-teal-800 hover:bg-teal-700 text-white rounded-lg text-2xl font-light",
-  backClassName = "w-full h-14 border-2 border-white text-white hover:bg-white/10 rounded-lg text-2xl font-light",
+  proceedClassName = "w-full h-20 bg-teal-800 hover:bg-teal-700 text-white rounded-lg text-4xl font-bold",
+  backClassName = "w-full h-20 border-2 border-white text-white hover:bg-white/10 rounded-lg text-4xl font-bold",
   className = "w-full max-w-md mx-auto space-y-4 flex-shrink-0"
 }: NavigationButtonsProps) {
   const { currentLanguage } = useLanguage()

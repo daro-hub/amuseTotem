@@ -1,12 +1,19 @@
 'use client'
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react'
+import React, { createContext, useContext, useState, ReactNode, useEffect, Suspense } from 'react'
+import { useUrlParams } from '@/hooks/use-url-params'
+
+interface MuseumLanguage {
+  language_id: number
+  code: string
+  name: string
+}
 
 interface MuseumData {
   museum_id: string
   museum_name: string
   museum_description: string
-  museum_languages: string[]
+  museum_languages: MuseumLanguage[]
   itineraries: Itinerary[]
 }
 
@@ -43,15 +50,41 @@ interface MuseumContextType {
   isLoading: boolean
   error: string | null
   fetchMuseumData: (museumId: string) => Promise<void>
+  ticketPrice: number
+  currency: string
+  mode: 'test' | 'museo' | 'chiesa'
+  updateConfig: (ticketPrice: number, currency: string, mode: 'test' | 'museo' | 'chiesa') => void
 }
 
 const MuseumContext = createContext<MuseumContextType | undefined>(undefined)
 
-export function MuseumProvider({ children }: { children: ReactNode }) {
+function MuseumProviderContent({ children }: { children: ReactNode }) {
   const [museumData, setMuseumData] = useState<MuseumData | null>(null)
   const [currentMuseumId, setCurrentMuseumId] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  
+  // Ottieni parametri URL
+  const urlParams = useUrlParams()
+  
+  // Stati per i parametri configurabili
+  const [ticketPrice, setTicketPrice] = useState(5)
+  const [currency, setCurrency] = useState('EUR')
+  const [mode, setMode] = useState<'test' | 'museo' | 'chiesa'>('museo')
+  
+  // Inizializza i valori dai parametri URL o localStorage
+  useEffect(() => {
+    const initialTicketPrice = urlParams.ticketPrice || 
+      (typeof window !== 'undefined' && localStorage.getItem('urlTicketPrice') ? parseFloat(localStorage.getItem('urlTicketPrice')!) : 5)
+    const initialCurrency = urlParams.currency || 
+      (typeof window !== 'undefined' ? localStorage.getItem('urlCurrency') : null) || 'EUR'
+    const initialMode = urlParams.mode || 
+      (typeof window !== 'undefined' ? localStorage.getItem('urlMode') as 'test' | 'museo' | 'chiesa' : null) || 'museo'
+    
+    setTicketPrice(initialTicketPrice)
+    setCurrency(initialCurrency)
+    setMode(initialMode)
+  }, [urlParams.ticketPrice, urlParams.currency, urlParams.mode])
 
   const fetchMuseumData = async (museumId: string) => {
     setIsLoading(true)
@@ -103,27 +136,120 @@ export function MuseumProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // Carica dati del museo da localStorage all'avvio
+  // Carica dati del museo da URL o localStorage
   useEffect(() => {
-    const savedMuseumId = localStorage.getItem('museumId')
-    const savedMuseumData = localStorage.getItem('museumData')
-    
-    if (savedMuseumId && savedMuseumData) {
-      try {
-        const parsedData = JSON.parse(savedMuseumData)
-        setCurrentMuseumId(savedMuseumId)
-        setMuseumData(parsedData)
-        console.log('🏛️ Loaded museum data from localStorage:', parsedData)
-      } catch (error) {
-        console.error('❌ Error parsing saved museum data:', error)
-        localStorage.removeItem('museumId')
-        localStorage.removeItem('museumData')
+    // Priorità 1: Parametri URL
+    if (urlParams.museumId) {
+      console.log('🔗 Museum ID from URL:', urlParams.museumId)
+      setCurrentMuseumId(urlParams.museumId)
+      
+      // Salva i parametri URL nel localStorage per mantenerli durante la navigazione
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('urlMuseumId', urlParams.museumId)
+        if (urlParams.ticketPrice) {
+          localStorage.setItem('urlTicketPrice', urlParams.ticketPrice.toString())
+        }
+        if (urlParams.currency) {
+          localStorage.setItem('urlCurrency', urlParams.currency)
+        }
+        if (urlParams.mode) {
+          localStorage.setItem('urlMode', urlParams.mode)
+        }
       }
+      
+      // Carica i dati del museo dall'API
+      fetchMuseumData(urlParams.museumId)
+      return
+    }
+
+    // Priorità 2: localStorage (fallback)
+    if (typeof window !== 'undefined') {
+      const savedMuseumId = localStorage.getItem('museumId')
+      const savedMuseumData = localStorage.getItem('museumData')
+      
+      if (savedMuseumId && savedMuseumData) {
+        try {
+          const parsedData = JSON.parse(savedMuseumData)
+          setCurrentMuseumId(savedMuseumId)
+          setMuseumData(parsedData)
+          console.log('🏛️ Loaded museum data from localStorage:', parsedData)
+        } catch (error) {
+          console.error('❌ Error parsing saved museum data:', error)
+          localStorage.removeItem('museumId')
+          localStorage.removeItem('museumData')
+        }
+      }
+    }
+  }, [urlParams.museumId])
+
+  // Usa i parametri salvati se non ci sono parametri URL
+  useEffect(() => {
+    if (!urlParams.museumId && typeof window !== 'undefined') {
+      const savedUrlMuseumId = localStorage.getItem('urlMuseumId')
+      const savedUrlTicketPrice = localStorage.getItem('urlTicketPrice')
+      const savedUrlCurrency = localStorage.getItem('urlCurrency')
+      const savedUrlMode = localStorage.getItem('urlMode')
+      
+      if (savedUrlMuseumId) {
+        console.log('🔄 Restoring URL parameters from localStorage:', {
+          museumId: savedUrlMuseumId,
+          ticketPrice: savedUrlTicketPrice,
+          currency: savedUrlCurrency,
+          mode: savedUrlMode
+        })
+        setCurrentMuseumId(savedUrlMuseumId)
+        fetchMuseumData(savedUrlMuseumId)
+      }
+    }
+  }, [urlParams.museumId])
+
+  // Forza il ripristino dei parametri URL quando la pagina viene caricata
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const restoreUrlParams = () => {
+      const savedUrlMuseumId = localStorage.getItem('urlMuseumId')
+      const savedUrlTicketPrice = localStorage.getItem('urlTicketPrice')
+      const savedUrlCurrency = localStorage.getItem('urlCurrency')
+      const savedUrlMode = localStorage.getItem('urlMode')
+      
+      if (savedUrlMuseumId && !urlParams.museumId) {
+        console.log('🔄 Force restoring URL parameters on page load')
+        setCurrentMuseumId(savedUrlMuseumId)
+        fetchMuseumData(savedUrlMuseumId)
+      }
+    }
+
+    // Ripristina i parametri quando la pagina diventa visibile
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        restoreUrlParams()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    restoreUrlParams()
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [])
 
   // Rimuovo questo useEffect per evitare chiamate API automatiche
   // che sovrascrivono i dati caricati da localStorage
+
+  const updateConfig = (newTicketPrice: number, newCurrency: string, newMode: 'test' | 'museo' | 'chiesa') => {
+    setTicketPrice(newTicketPrice)
+    setCurrency(newCurrency)
+    setMode(newMode)
+    
+    // Salva nel localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('urlTicketPrice', newTicketPrice.toString())
+      localStorage.setItem('urlCurrency', newCurrency)
+      localStorage.setItem('urlMode', newMode)
+    }
+  }
 
   const value = {
     museumData,
@@ -139,13 +265,31 @@ export function MuseumProvider({ children }: { children: ReactNode }) {
     },
     isLoading,
     error,
-    fetchMuseumData
+    fetchMuseumData,
+    ticketPrice,
+    currency,
+    mode,
+    updateConfig
   }
 
   return (
     <MuseumContext.Provider value={value}>
       {children}
     </MuseumContext.Provider>
+  )
+}
+
+export function MuseumProvider({ children }: { children: ReactNode }) {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white text-2xl">Loading...</div>
+      </div>
+    }>
+      <MuseumProviderContent>
+        {children}
+      </MuseumProviderContent>
+    </Suspense>
   )
 }
 

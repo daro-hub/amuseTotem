@@ -33,22 +33,21 @@ export default function PaymentProcess () {
 
   return (
     <div className="h-[100dvh] page-container bg-black flex flex-col items-center p-6 overflow-hidden">
-      {/* Logo e nome app */}
-      <div className="pt-2 pb-2 flex-shrink-0">
-        <AmuseLogo size={tabletSizes.logo.size} m-0 py-0 />
-      </div>
-
-      {/* Contenuto centrale */}
-      <div className={`flex flex-col items-center space-y-6 w-full ${tabletSizes.spacing.container} mt-4 flex-1 justify-center`}>
-        {/* Istruzioni pagamento */}
-        <div className="text-center space-y-3">
+      {/* Header con logo, titolo e sottotitolo - Allineato in alto */}
+      <div className="flex flex-col items-center pt-2 pb-2 flex-shrink-0">
+        <AmuseLogo size={tabletSizes.logo.size} />
+        <div className="text-center mt-1">
           <h2 className="text-white text-4xl font-bold text-center">
             {t('paymentProcess.title', currentLanguage)}
           </h2>
-          <p className="text-white text-2xl font-light text-center">
+          <p className="text-white text-2xl font-light text-center mt-2">
             {t('paymentProcess.instructions', currentLanguage)}
           </p>
         </div>
+      </div>
+
+      {/* Contenuto centrale */}
+      <div className={`flex flex-col items-center space-y-6 w-full ${tabletSizes.spacing.container} mt-0 flex-1 justify-center`}>
 
         {/* Immagine pay.png */}
         <div className="w-64 h-40 flex items-center justify-center">

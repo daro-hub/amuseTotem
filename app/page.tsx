@@ -34,7 +34,7 @@ export default function LanguageSelector() {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const { t, setLanguage, currentLanguage } = useLanguage()
-  const { museumId, museumData, setMuseumId } = useMuseum()
+  const { museumId, museumData, setMuseumId, mode, ticketPrice, currency, updateConfig } = useMuseum()
   
   // Hook per gestire il ricalcolo delle dimensioni
   useFontRecalc()
@@ -284,6 +284,10 @@ export default function LanguageSelector() {
         onClose={handleDialogClose}
         onMuseumIdSet={handleMuseumIdSet}
         currentMuseumId={museumId || undefined}
+        currentTicketPrice={ticketPrice}
+        currentCurrency={currency}
+        currentMode={mode}
+        onConfigUpdate={updateConfig}
       />
     </div>
   )

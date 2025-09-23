@@ -12,19 +12,38 @@ interface MuseumDialogProps {
   onClose: () => void
   onMuseumIdSet: (museumId: string, museumData: any) => void
   currentMuseumId?: string
+  currentTicketPrice?: number
+  currentCurrency?: string
+  currentMode?: 'test' | 'museo' | 'chiesa'
+  onConfigUpdate?: (ticketPrice: number, currency: string, mode: 'test' | 'museo' | 'chiesa') => void
 }
 
-export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }: MuseumDialogProps) {
+export function MuseumDialog({ 
+  isOpen, 
+  onClose, 
+  onMuseumIdSet, 
+  currentMuseumId,
+  currentTicketPrice = 5,
+  currentCurrency = 'EUR',
+  currentMode = 'museo',
+  onConfigUpdate
+}: MuseumDialogProps) {
   const [museumId, setMuseumId] = useState(currentMuseumId || '')
+  const [ticketPrice, setTicketPrice] = useState(currentTicketPrice)
+  const [currency, setCurrency] = useState(currentCurrency)
+  const [mode, setMode] = useState<'test' | 'museo' | 'chiesa'>(currentMode)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (isOpen) {
       setMuseumId(currentMuseumId || '')
+      setTicketPrice(currentTicketPrice)
+      setCurrency(currentCurrency)
+      setMode(currentMode)
       setError('')
     }
-  }, [isOpen, currentMuseumId])
+  }, [isOpen, currentMuseumId, currentTicketPrice, currentCurrency, currentMode])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -76,8 +95,18 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
         console.log('✅ Museum data received:', museumData)
         
         // Salva nel localStorage
-        localStorage.setItem('museumId', museumId)
-        localStorage.setItem('museumData', JSON.stringify(museumData))
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('museumId', museumId)
+          localStorage.setItem('museumData', JSON.stringify(museumData))
+          localStorage.setItem('urlTicketPrice', ticketPrice.toString())
+          localStorage.setItem('urlCurrency', currency)
+          localStorage.setItem('urlMode', mode)
+        }
+        
+        // Aggiorna la configurazione nel context
+        if (onConfigUpdate) {
+          onConfigUpdate(ticketPrice, currency, mode)
+        }
         
         onMuseumIdSet(museumId, museumData)
         onClose()
@@ -118,7 +147,8 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
             </DialogTitle>
           </DialogHeader>
           
-          <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center">
+          <form onSubmit={handleSubmit} className="space-y-4 flex flex-col items-center">
+            {/* ID Museo */}
             <div className="w-full text-center">
               <label htmlFor="museumId" className={`block ${typography.body.classes} font-medium mb-2`}>
                 ID Museo
@@ -135,10 +165,67 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
                   style={{ fontSize: '3rem', lineHeight: '1' }}
                 />
               </div>
-              {error && (
-                <p className={`text-red-500 ${typography.small.classes} mt-1`}>{error}</p>
-              )}
             </div>
+
+            {/* Prezzo Biglietto */}
+            <div className="w-full text-center">
+              <label htmlFor="ticketPrice" className={`block ${typography.body.classes} font-medium mb-2`}>
+                Prezzo Biglietto (€)
+              </label>
+              <div className="flex justify-center">
+                <Input
+                  id="ticketPrice"
+                  type="number"
+                  step="0.01"
+                  value={ticketPrice}
+                  onChange={(e) => setTicketPrice(parseFloat(e.target.value) || 0)}
+                  disabled={isLoading}
+                  className="w-48 h-12 text-center font-medium"
+                />
+              </div>
+            </div>
+
+            {/* Valuta */}
+            <div className="w-full text-center">
+              <label htmlFor="currency" className={`block ${typography.body.classes} font-medium mb-2`}>
+                Valuta
+              </label>
+              <div className="flex justify-center">
+                <Input
+                  id="currency"
+                  type="text"
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value.toUpperCase())}
+                  placeholder="EUR"
+                  disabled={isLoading}
+                  className="w-48 h-12 text-center font-medium"
+                />
+              </div>
+            </div>
+
+            {/* Modalità */}
+            <div className="w-full text-center">
+              <label htmlFor="mode" className={`block ${typography.body.classes} font-medium mb-2`}>
+                Modalità
+              </label>
+              <div className="flex justify-center">
+                <select
+                  id="mode"
+                  value={mode}
+                  onChange={(e) => setMode(e.target.value as 'test' | 'museo' | 'chiesa')}
+                  disabled={isLoading}
+                  className="w-48 h-12 text-center border rounded-md bg-white font-medium text-gray-900"
+                >
+                  <option value="museo">Museo</option>
+                  <option value="test">Test</option>
+                  <option value="chiesa">Chiesa</option>
+                </select>
+              </div>
+            </div>
+
+            {error && (
+              <p className={`text-red-500 ${typography.small.classes} mt-1`}>{error}</p>
+            )}
             
             <div className="flex gap-3 w-full max-w-xs">
               <Button
@@ -182,8 +269,19 @@ export function MuseumDialog({ isOpen, onClose, onMuseumIdSet, currentMuseumId }
                         { code: 'fr', name: 'Français' }
                       ]
                     }
-                    localStorage.setItem('museumId', museumId)
-                    localStorage.setItem('museumData', JSON.stringify(mockData))
+                    if (typeof window !== 'undefined') {
+                      localStorage.setItem('museumId', museumId)
+                      localStorage.setItem('museumData', JSON.stringify(mockData))
+                      localStorage.setItem('urlTicketPrice', ticketPrice.toString())
+                      localStorage.setItem('urlCurrency', currency)
+                      localStorage.setItem('urlMode', mode)
+                    }
+                    
+                    // Aggiorna la configurazione nel context
+                    if (onConfigUpdate) {
+                      onConfigUpdate(ticketPrice, currency, mode)
+                    }
+                    
                     onMuseumIdSet(museumId, mockData)
                     onClose()
                   }}
